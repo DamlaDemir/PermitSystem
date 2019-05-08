@@ -2,20 +2,28 @@ import React,{Component} from 'react';
 import {View} from 'react-native';
 import { Container, Text, Content,Icon} from 'native-base';
 import {AccordionComponent} from '../../../components';
+import Colors from '../../../assets/colors/Colors';
 
 const dataArray = [
-    { title: "First Element", content: "Lorem ipsum dolor sit amet" },
-    { title: "Second Element", content: "Lorem ipsum dolor sit amet" },
-    { title: "Third Element", content: "Lorem ipsum dolor sit amet" }
+    { title: "YILLIK İZİN", content: "Lorem ipsum dolor sit amet" },
+    { title: "YILLIK İZİN", content: "Lorem ipsum dolor sit amet" },
+    { title: "YILLIK İZİN", content: "Lorem ipsum dolor sit amet" },
+    { title: "YILLIK İZİN", content: "Lorem ipsum dolor sit amet" },
+    { title: "YILLIK İZİN", content: "Lorem ipsum dolor sit amet" },
+    { title: "DOĞUM İZNİ", content: "Lorem ipsum dolor sit amet" },
+    { title: "YILLIK İZİN", content: "Lorem ipsum dolor sit amet" },
+    { title: "DOĞUM İZNİ", content: "Lorem ipsum dolor sit amet" },
+    { title: "DOĞUM İZNİ", content: "Lorem ipsum dolor sit amet" },
+    { title: "YILLIK İZİN", content: "Lorem ipsum dolor sit amet" },
+    { title: "YILLIK İZİN", content: "Lorem ipsum dolor sit amet" },
+    { title: "YILLIK İZİN", content: "Lorem ipsum dolor sit amet" },
+
   ];
 
 class ListTab extends Component {
 constructor(props){
     super(props)
-    alert("damla");
-
 }
-
     static navigationOptions = {
         title: 'Second Tab',
         headerRight: (<View></View>),
@@ -33,11 +41,11 @@ constructor(props){
         },
       };//Steack navigator özelliğinden gelen sayfadaki headerın özellikleri
     render(){
-        const {container}=styles;
+        const {container,container2}=styles;
         return(
             <Container style={container}>
                 <Content>                
-                    <AccordionComponent dataArray={dataArray} />
+                    <AccordionComponent dataArray={dataArray} />               
                 </Content>
             </Container>
         );
@@ -46,7 +54,7 @@ constructor(props){
 
 const styles = {
     container: {
-      backgroundColor:'#FFF5EE'
+    backgroundColor:"#FEFFFF"
     }
 }
 export default ListTab;

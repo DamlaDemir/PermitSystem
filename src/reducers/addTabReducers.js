@@ -20,7 +20,7 @@ export default (state=INITIAL_STATE, action) =>{
         return{...state,stateName:action.payload.stateName,[action.payload.selectedDtp]:true}
 
         case DATETIME_CANCEL:
-        return{...state,[action.payload.selectedDtp]:false}
+        return{...state,[action.payload]:false}
 
         case DATETIME_SET:
         return{

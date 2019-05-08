@@ -77,6 +77,11 @@
 		F6C49151FD374DF1B805F5E2 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A7AF172079D47FF8BF10EC7 /* libRNGestureHandler.a */; };
 		08FAD97333D646F6B1F4A750 /* libRNGestureHandler-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B677ACCDC148859C45706B /* libRNGestureHandler-tvOS.a */; };
 		34E868404D83413A8576273B /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53BFD3950362434A858B8D8E /* libBVLinearGradient.a */; };
+		878580742B104344A1565183 /* AngillaTattoo_PERSONAL_USE_ONLY.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57DBE074A80741C986A8050B /* AngillaTattoo_PERSONAL_USE_ONLY.ttf */; };
+		17D85861E8964A599E1638E5 /* LemonMilkbold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 11B8730C70364658BD709940 /* LemonMilkbold.otf */; };
+		A9804810B773485289362E1A /* AngillaTattoo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BC88D0A4400B44F989CCF127 /* AngillaTattoo.ttf */; };
+		2F051BEEFB4046A68C490FE2 /* Montserrat-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 01C80D1C46A747BFBD7490DD /* Montserrat-ExtraLight.otf */; };
+		85B758A2F527412C99547E53 /* Montserrat-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = C81812B6E67F46878E383BBE /* Montserrat-Light.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -425,6 +430,11 @@
 		F8B677ACCDC148859C45706B /* libRNGestureHandler-tvOS.a */ = {isa = PBXFileReference; name = "libRNGestureHandler-tvOS.a"; path = "libRNGestureHandler-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		5FE2053B2EAF446EBA61E71B /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; name = "BVLinearGradient.xcodeproj"; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		53BFD3950362434A858B8D8E /* libBVLinearGradient.a */ = {isa = PBXFileReference; name = "libBVLinearGradient.a"; path = "libBVLinearGradient.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		57DBE074A80741C986A8050B /* AngillaTattoo_PERSONAL_USE_ONLY.ttf */ = {isa = PBXFileReference; name = "AngillaTattoo_PERSONAL_USE_ONLY.ttf"; path = "../src/assets/fonts/AngillaTattoo_PERSONAL_USE_ONLY.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		11B8730C70364658BD709940 /* LemonMilkbold.otf */ = {isa = PBXFileReference; name = "LemonMilkbold.otf"; path = "../src/assets/fonts/LemonMilkbold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BC88D0A4400B44F989CCF127 /* AngillaTattoo.ttf */ = {isa = PBXFileReference; name = "AngillaTattoo.ttf"; path = "../src/assets/fonts/AngillaTattoo.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		01C80D1C46A747BFBD7490DD /* Montserrat-ExtraLight.otf */ = {isa = PBXFileReference; name = "Montserrat-ExtraLight.otf"; path = "../src/assets/fonts/Montserrat-ExtraLight.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C81812B6E67F46878E383BBE /* Montserrat-Light.otf */ = {isa = PBXFileReference; name = "Montserrat-Light.otf"; path = "../src/assets/fonts/Montserrat-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -734,6 +744,11 @@
 				1D68EFA65DF4473C88851420 /* rubicon-icon-font.ttf */,
 				7FF409FBB3B44BA28FA4845E /* SimpleLineIcons.ttf */,
 				9F1924FDD77F4006A4092001 /* Zocial.ttf */,
+				57DBE074A80741C986A8050B /* AngillaTattoo_PERSONAL_USE_ONLY.ttf */,
+				11B8730C70364658BD709940 /* LemonMilkbold.otf */,
+				BC88D0A4400B44F989CCF127 /* AngillaTattoo.ttf */,
+				01C80D1C46A747BFBD7490DD /* Montserrat-ExtraLight.otf */,
+				C81812B6E67F46878E383BBE /* Montserrat-Light.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1218,6 +1233,11 @@
 				7F6A789DD1614E47BA976F4A /* rubicon-icon-font.ttf in Resources */,
 				F69DD5E1DF584F0F8FD98066 /* SimpleLineIcons.ttf in Resources */,
 				5835374D16054401BE7167A9 /* Zocial.ttf in Resources */,
+				878580742B104344A1565183 /* AngillaTattoo_PERSONAL_USE_ONLY.ttf in Resources */,
+				17D85861E8964A599E1638E5 /* LemonMilkbold.otf in Resources */,
+				A9804810B773485289362E1A /* AngillaTattoo.ttf in Resources */,
+				2F051BEEFB4046A68C490FE2 /* Montserrat-ExtraLight.otf in Resources */,
+				85B758A2F527412C99547E53 /* Montserrat-Light.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
