@@ -9,7 +9,7 @@ class Logo extends Component{
         return(
             <View style={container}>
                 <Image style={image} source={LogoImage} />
-                <Text style={[Styles.textStyle,{fontWeight:'300',color:'white'}]}>Yıllık İzin Takip Sistemine Hoşgeldiniz</Text>
+                <Text style={[Styles.textStyle,{fontWeight:'300', marginTop:20 ,color:'white'}]}>Yıllık İzin Takip Sistemine Hoşgeldiniz</Text>
             </View>
         );
     }
@@ -27,12 +27,6 @@ const styles ={
         height: 100,
         alignSelf: 'center',
         left:-30
-    },
-    text: {
-        color: 'white',
-        fontWeight: 'bold',
-        backgroundColor: 'transparent',
-        marginTop:20,
     }
 };
 

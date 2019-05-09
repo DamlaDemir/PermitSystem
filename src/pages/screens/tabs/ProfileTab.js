@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Image, Dimensions, ScrollView } from 'react-native';
+import { KeyboardAvoidingView, View, Image, Dimensions, ScrollView } from 'react-native';
 import UserImage from '../../../images/user.png'
 import { Button, CustomInput } from '../../../components';
+import Styles from "../../../assets/styles/styles"
 
 class ProfileTab extends Component {
     static navigationOptions = {
@@ -25,6 +26,7 @@ class ProfileTab extends Component {
     render() {
         const { container, inputStyle, button, inlineImg, InlineIcon } = styles;
         return (
+            <KeyboardAvoidingView>
             <ScrollView>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
@@ -47,7 +49,7 @@ class ProfileTab extends Component {
                             autoCapitalize={'none'}
                             autoCorrect={true}
                             value={this.props.explanation}
-                            inputStyle={inputStyle}
+                            inputStyle={[inputStyle,Styles.textStyle]}
                             placeholderTextColor="black"
                             underlineColorAndroid="transparent"
                             multiline={true}
@@ -64,7 +66,7 @@ class ProfileTab extends Component {
                             autoCorrect={true}
                             value={this.props.explanation}
                             InlineIcon={inlineImg}
-                            inputStyle={inputStyle}
+                            inputStyle={[inputStyle,Styles.textStyle]}
                             placeholderTextColor="black"
                             underlineColorAndroid="transparent"
                             multiline={true}
@@ -80,7 +82,7 @@ class ProfileTab extends Component {
                             autoCorrect={true}
                             value={this.props.explanation}
                             InlineIcon={inlineImg}
-                            inputStyle={inputStyle}
+                            inputStyle={[inputStyle,Styles.textStyle]}
                             placeholderTextColor="black"
                             underlineColorAndroid="transparent"
                             multiline={true}
@@ -96,7 +98,7 @@ class ProfileTab extends Component {
                             autoCorrect={true}
                             value={this.props.explanation}
                             InlineIcon={inlineImg}
-                            inputStyle={inputStyle}
+                            inputStyle={[inputStyle,Styles.textStyle]}
                             placeholderTextColor="black"
                             underlineColorAndroid="transparent"
                             multiline={true}
@@ -112,7 +114,7 @@ class ProfileTab extends Component {
                             autoCorrect={true}
                             value={this.props.explanation}
                             InlineIcon={inlineImg}
-                            inputStyle={inputStyle}
+                            inputStyle={[inputStyle,Styles.textStyle]}
                             placeholderTextColor="black"
                             underlineColorAndroid="transparent"
                             multiline={true}
@@ -129,7 +131,7 @@ class ProfileTab extends Component {
                             autoCorrect={true}
                             value={this.props.explanation}
                             InlineIcon={inlineImg}
-                            inputStyle={inputStyle}
+                            inputStyle={[inputStyle,Styles.textStyle]}
                             placeholderTextColor="black"
                             underlineColorAndroid="transparent"
                             multiline={true}
@@ -146,7 +148,7 @@ class ProfileTab extends Component {
                             autoCorrect={true}
                             value={this.props.explanation}
                             InlineIcon={inlineImg}
-                            inputStyle={inputStyle}
+                            inputStyle={[inputStyle,Styles.textStyle]}
                             placeholderTextColor="black"
                             underlineColorAndroid="transparent"
                             multiline={true}
@@ -163,7 +165,7 @@ class ProfileTab extends Component {
                             autoCorrect={true}
                             value={this.props.explanation}
                             InlineIcon={inlineImg}
-                            inputStyle={inputStyle}
+                            inputStyle={[inputStyle,Styles.textStyle]}
                             placeholderTextColor="black"
                             underlineColorAndroid="transparent"
                             multiline={true}
@@ -178,6 +180,7 @@ class ProfileTab extends Component {
                     </View>
                 </View>
             </ScrollView>
+            </KeyboardAvoidingView>
         );
     }
 }
