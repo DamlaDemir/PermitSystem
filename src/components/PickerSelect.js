@@ -3,7 +3,7 @@ import {View, StyleSheet, Text,Dimensions,Alert,Image } from 'react-native';
 import { CustomPicker } from 'react-native-custom-picker';
 import Colors from '../assets/colors/Colors';
 import SelectImage from '../images/check.png';
-
+import Styles from '../assets/styles/styles';
 
 class PickerSelect extends React.Component {
   state = {choosenLabel: '', choosenindex: ''}
@@ -11,30 +11,14 @@ class PickerSelect extends React.Component {
   render() {
     const options = [
       {
-        label: 'One',
+        label: 'Yıllık İzin',
         value: 1
       },
-      {
-        label: 'Two',
-        value: 2
-      },
-      {
-        label: 'Three',
-        value: 3
-      },
-      {
-        label: 'Four',
-        value: 4
-      },
-      {
-        label: 'Five',
-        value: 5
-      }
     ]
     return (
       <View>
         <CustomPicker
-          placeholder={'Lütfen izin türünü seçiniz..'}
+          placeholder={'Lütfen izin türünü seçiniz'}
           options={options}
           getLabel={item => item.label}
           fieldTemplate={this.renderField}
@@ -50,7 +34,7 @@ class PickerSelect extends React.Component {
   renderHeader() {
     return (
       <View style={styles.headerFooterContainer}>
-        <Text>İzin Türleri</Text>
+        <Text style={Styles.textStyle}>İzin Türleri</Text>
       </View>
     )
   }
@@ -59,18 +43,16 @@ class PickerSelect extends React.Component {
     debugger;
     const { selectedItem, defaultText, getLabel, clear } = settings
     return (
-      <View style={styles.inputStyle}>
-        <View>
+      <View style={[Styles.inputStyle,{height:30,paddingLeft:5}]}>
         <Image source={SelectImage} style={styles.inlineImg} />
-          {!selectedItem && <Text style={[styles.text, { color: 'black' }]}>{defaultText}</Text>}
+          {!selectedItem && <Text style={[Styles.textStyle,{left:35}]}>{defaultText}</Text>}
           {selectedItem && (
             <View style={styles.innerContainer}>
-              <Text style={[styles.text, { color: "black" }]}>
+              <Text style={[Styles.textStyle,{left:35}]}>
                 {getLabel(selectedItem)}
               </Text>
             </View>
           )}
-        </View>
       </View>
     )
   }
@@ -80,14 +62,12 @@ class PickerSelect extends React.Component {
     return (
       <View style={styles.optionContainer}>
         <View style={styles.innerContainer}>
-          <Text style={{ color: "black", alignSelf: 'flex-start' }}>{getLabel(item)}</Text>
+          <Text style={[{alignSelf: 'flex-start'},Styles.textStyle]}>{getLabel(item)}</Text>
         </View>
       </View>
     )
   }
 }
-
-const DEVICE_WIDTH = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
@@ -99,15 +79,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch'
   },
-  text: {
-    fontSize: 14,
-    left:35
-  },
   headerFooterContainer: {
     padding: 10,
     alignItems: 'center'
   },
-  clearButton: {  borderRadius: 5, marginRight: 10, padding: 5 },
   optionContainer: {
     padding: 10,
     borderBottomColor: 'grey',
@@ -117,19 +92,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row'
   },
-  inputStyle : {
-    backgroundColor: '#fafafa',
-    width: DEVICE_WIDTH - 40,
-   // height: 60,
-    marginTop: 14,
-    marginLeft:15,
-    paddingTop:14,
-    paddingLeft:5,
-    borderRadius: 5,
-    //color: '#ffffff',
-    borderBottomWidth:1.25,
-    borderColor:'#33691e',   
-},
   inlineImg: {
   position: 'absolute',
   zIndex: 99,

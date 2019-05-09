@@ -16,7 +16,6 @@ const dataArray = [
     { title: "DOĞUM İZNİ", content: "Lorem ipsum dolor sit amet" },
     { title: "YILLIK İZİN", content: "Lorem ipsum dolor sit amet" },
     { title: "YILLIK İZİN", content: "Lorem ipsum dolor sit amet" },
-    { title: "YILLIK İZİN", content: "Lorem ipsum dolor sit amet" },
 
   ];
 
@@ -29,7 +28,6 @@ constructor(props){
         headerRight: (<View></View>),
         headerStyle: {
           backgroundColor: 'white',
-          flex: 1
         },
         headerTintColor: '#000',
         headerTitleStyle: {
@@ -41,7 +39,7 @@ constructor(props){
         },
       };//Steack navigator özelliğinden gelen sayfadaki headerın özellikleri
     render(){
-        const {container,container2}=styles;
+        const {container}=styles;
         return(
             <Container style={container}>
                 <Content>                

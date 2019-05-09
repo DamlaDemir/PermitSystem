@@ -3,6 +3,7 @@ import { Container, Header, Content, Icon, Accordion, Text, View } from "native-
 import permitImage from '../images/permit.png';
 import {Image} from 'react-native';
 import Colors from '../assets/colors/Colors';
+import Styles from '../assets/styles/styles';
 
 class AccordionComponent extends Component {
  
@@ -10,15 +11,14 @@ class AccordionComponent extends Component {
     const {headerStyle,iconStyle,inlineImg,imageView,headerTextStyle,headerTextView}=styles;
     return (
       <View style={headerStyle}>
-      <View style={[imageView,{backgroundColor:item.title == "YILLIK İZİN" ? "#6b7a8f" :"#a9b7c0"}]}><Image source={permitImage} style={inlineImg}/></View>
-
-      <View style={[headerTextView,{borderColor:item.title == "YILLIK İZİN" ? "#6b7a8f" :"#dcc7aa"}]}>
+      <View style={[imageView,{backgroundColor:item.title == "YILLIK İZİN" ? Colors.blueberry :Colors.darkRed},Styles.alignmentStyle]}><Image source={permitImage} style={inlineImg}/></View>
+      <View style={[headerTextView,{borderColor:item.title == "YILLIK İZİN" ? Colors.blueberry :Colors.darkRed},Styles.alignmentStyle]}>
       <Text style={headerTextStyle}>
           {" "}{item.title}
         </Text>
         {expanded
-          ? <Icon style={[iconStyle,{color:item.title == "YILLIK İZİN" ? "#6b7a8f" :"#dcc7aa"}] } name="remove-circle" /> 
-          : <Icon style={[iconStyle,{color:item.title == "YILLIK İZİN" ? "#6b7a8f" :"#dcc7aa"}]} name="ios-add-circle" />}
+          ? <Icon style={[iconStyle,{color:item.title == "YILLIK İZİN" ? Colors.blueberry :Colors.darkRed}] } name="remove-circle" /> 
+          : <Icon style={[iconStyle,{color:item.title == "YILLIK İZİN" ? Colors.blueberry :Colors.darkRed}]} name="ios-add-circle" />}
       </View>
 
       </View>
@@ -26,28 +26,25 @@ class AccordionComponent extends Component {
     );
   }
   _renderContent(item) {
-    const {container,contentLeftView,contentLeftInnerView,contentLeftText,contentRightView,contentRightInnerView,contentRightText}=styles;
+    const {container,contentLeftView,contentRightView,contentRightInnerView}=styles;
     return (
       <View style={container}>
-        <View style={[contentLeftView,{backgroundColor:item.title == "YILLIK İZİN" ? "#6b7a8f" :"#dcc7aa"}]}>
-          <View style={contentLeftInnerView}>
-            <Text style={contentLeftText}>5 Saat</Text>
-          </View>    
+        <View style={[contentLeftView,{backgroundColor:item.title == "YILLIK İZİN" ? Colors.blueberry  :Colors.darkRed},Styles.alignmentStyle]}>
+            <Text style={[Styles.textStyle,{color:'white'}]}>5 Saat</Text>
+        </View> 
+        <View style={contentRightView}> 
+          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>İzin No: 23453</Text>
+          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>İzin Türü: Yıllık İzin</Text>
+          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>Başlangıç Tarihi:03.05.2019 12:30</Text>
+          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>Bitiş Tarihi:04.05.2019 13:30</Text>
+          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>Açıklama: Yıllık İzin Açıklaması</Text>
+          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>Talep Tarihi: 04.05.2019 13:30</Text>
+          <View style={{flex:1,paddingLeft:5,margin:5,flexDirection:'row'}}>
+            <Text style={[Styles.textStyle,{fontSize:14,flex:0.5}]}>Durum:</Text>
+            <Text style={[Styles.textStyle,{borderRadius:5,backgroundColor:Colors.inspinia_orange,width:120,fontSize:14}]}>Onay Bekleniyor</Text>
+          </View>
         </View>
-
-        <View style={contentRightView}>
-        <View style={contentRightInnerView}><Text style={contentRightText}>İzin No: 23453</Text></View>
-        <View style={contentRightInnerView}><Text style={contentRightText}>İzin Türü: Yıllık İzin</Text></View>
-        <View style={contentRightInnerView}><Text style={contentRightText}>Başlangıç Tarihi:03.05.2019 12:30</Text></View>
-        <View style={contentRightInnerView}><Text style={contentRightText}>Bitiş Tarihi:04.05.2019 13:30</Text></View>
-        <View style={contentRightInnerView}><Text style={contentRightText}>Açıklama: Yıllık İzin Açıklaması</Text></View>
-        <View style={contentRightInnerView}><Text style={contentRightText}>Talep Tarihi: 04.05.2019 13:30</Text></View>
-        <View style={{flex:1,paddingLeft:5,margin:5,flexDirection:'row'}}>
-        <View style={{flex:0.5}}><Text style={{color:'black', fontWeight:"100", fontSize:14,fontFamily: "Montserrat-Light"}}>Durum:</Text></View>
-        <View style={{flex:1.5}}><Text style={{color:'black', fontWeight:"100",fontSize:14,fontFamily: "Montserrat-Light",borderRadius:5,backgroundColor:Colors.inspinia_orange,width:120}}>Onay Bekleniyor</Text></View>
-        </View>
-        </View>
-        </View>   
+      </View>   
     );
   }
   render() {
@@ -91,8 +88,6 @@ const styles = {
   },
   imageView: {
     flex:0.5,
-    justifyContent:'center', 
-    alignItems:'center',
     borderColor:"white",
     borderBottomWidth:1
   },
@@ -100,8 +95,6 @@ const styles = {
     flex:2,
     flexDirection:'row', 
     backgroundColor:"#F8FAFF",
-    justifyContent:'center', 
-    alignItems:'center',
     borderBottomWidth:1,
     paddingLeft:7
   },
@@ -117,25 +110,6 @@ const styles = {
     borderRightWidth:1,
     borderColor:"white"
   },
-  contentLeftInnerView: {
-    flex:1,
-    paddingLeft:5,
-    margin:5,
-    justifyContent:'center',
-    alignItems:'center'
-  },
-  contentLeftViewText: {
-    color:'white', 
-    fontWeight:"100", 
-    fontSize:16,
-    fontFamily: "Montserrat-Light"
-  },
-  contentLeftText: {
-    color:'white', 
-    fontWeight:"100", 
-    fontSize:16,
-    fontFamily: "Montserrat-Light"
-  },
   contentRightView: {
     flex:2,
     paddingLeft:5,
@@ -146,13 +120,6 @@ const styles = {
     paddingLeft:5,
     margin:5
   },  
-  contentRightText: {
-    color:'black',
-     fontWeight:"100",
-     fontSize:14,
-     fontFamily: "Montserrat-Light"
-  }
-  
 
 }
 

@@ -6,6 +6,7 @@ import ListTab from './tabs/ListTab';
 import ProfileTab from './tabs/ProfileTab';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import IconWithBadge from './icon/IconWithBadge';
+import Colors from '../../assets/colors/Colors';
 
 //stack navigator sayesinde mesela 1.tab içine buton koyup başka sayfaya geçiş yapılabilir.Yani tablar içinde yeni sayfaalra geçiş için her bir
 //tab stack navigator olarak ayarlandı.
@@ -61,7 +62,7 @@ const MainNavigator = createBottomTabNavigator (
             }),
         tabBarOptions: {
           showIcon:true,     
-          activeTintColor: '#698b22',
+          activeTintColor: Colors.darkRed,
           inactiveTintColor: 'gray',
           labelStyle: {
             fontSize: 10,

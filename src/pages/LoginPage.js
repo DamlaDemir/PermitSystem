@@ -7,6 +7,9 @@ import {KeyboardAvoidingView,Platform} from 'react-native';
 import { CustomInput } from '../components';
 import UsernameImage from '../images/username.png';
 import PasswordImage from '../images/password.png';
+import Colors from '../assets/colors/Colors'
+import Styles from '../assets/styles/styles'
+
 //import {Actions} from 'react-native-router-flux';
 
  class LoginPage extends Component{
@@ -38,7 +41,7 @@ import PasswordImage from '../images/password.png';
             value={this.props.username}
             onChangeText={username => this.props.usernameChanged(username)}
             inlineImg= {inlineImg}
-            inputStyle= {inputStyle}
+            inputStyle= {[inputStyle,Styles.textStyle]}
             placeholderTextColor="white"
             underlineColorAndroid="transparent"
             multiline={false}
@@ -54,7 +57,7 @@ import PasswordImage from '../images/password.png';
             value={this.props.password}
             onChangeText={password => this.props.usernameChanged(password)}
             inlineImg= {inlineImg}
-            inputStyle= {inputStyle}
+            inputStyle= {[inputStyle,Styles.textStyle]}
             placeholderTextColor="white"
             underlineColorAndroid="transparent"
             multiline={false}
@@ -78,7 +81,7 @@ const styles = {
     button: {
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: '#698b22',
+      backgroundColor: Colors.darkRed,
       height: 40,
       width: DEVICE_WIDTH - 40,
       borderRadius: 20,

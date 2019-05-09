@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {View,Image,Text} from 'react-native';
 import LogoImage from '../images/logo.png';
+import Styles from '../assets/styles/styles'
 
 class Logo extends Component{
     render(){
@@ -8,7 +9,7 @@ class Logo extends Component{
         return(
             <View style={container}>
                 <Image style={image} source={LogoImage} />
-                <Text style={text}>Yıllık İzin Takip Sistemine Hoşgeldiniz.</Text>
+                <Text style={[Styles.textStyle,{fontWeight:'300',color:'white'}]}>Yıllık İzin Takip Sistemine Hoşgeldiniz</Text>
             </View>
         );
     }

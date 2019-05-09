@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {ImageBackground} from 'react-native';
-import bgImage from '../images/wallpaper.jpg';
+import bgImage from '../images/background.jpg';
 
 class Wallpaper extends Component{
 

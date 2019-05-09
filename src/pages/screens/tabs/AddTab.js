@@ -6,6 +6,7 @@ import { CustomDatePicker, Button, PickerSelect, CustomInput } from '../../../co
 import { clickDatetimePicker, cancelDatetimePicker, setDateTime, selectPickerChecked,setExplanation,takePermit } from '../../../actions';
 import Colors from '../../../assets/colors/Colors';
 import Explain from '../../../images/explain.png';
+import Styles from '../../../assets/styles/styles';
 
  class AddTab extends Component {
 
@@ -14,27 +15,17 @@ import Explain from '../../../images/explain.png';
     this._showDateTimePicker = this._showDateTimePicker.bind(this);
     this._hideDateTimePicker = this._hideDateTimePicker.bind(this);
     this._handleDatePicked = this._handleDatePicked.bind(this); 
-    this.state = {
-
-    }
   }
   static navigationOptions = {
     title: 'İzin Ekleme Sayfası',
-    headerRight: (<View></View>),
+    headerRight: (<View ></View>),
     headerStyle: {
-      backgroundColor: Colors.PageBackColor,
-      flex: 1,
+      backgroundColor: Colors.lightWhite,
       borderBottomWidth: 1,
-      borderColor: Colors.DarkGreen
+      borderColor: Colors.blueberry,
     },
-    headerTintColor: '#000',
-    headerTitleStyle: {
-      alignSelf: 'center',
-      textAlign: "center",
-      justifyContent: 'center',
-      //fontWeight: 'bold',
-      textAlignVertical: 'center'
-    },
+    headerTintColor: Colors.blueberry,
+    headerTitleStyle: Styles.textStyle
   };//Steack navigator özelliğinden gelen sayfadaki headerın özellikleri
 
   //datetime picker için
@@ -53,14 +44,12 @@ import Explain from '../../../images/explain.png';
 
   };
   //datetime picker için
-
   state = {
     reason: "",
     isLoading: false
   };
 
   takePermit() {
-    debugger;
     const permitParameters = {
       startTime:this.props.startTime,
       endTime: this.props.endTime,
@@ -107,14 +96,14 @@ import Explain from '../../../images/explain.png';
             value={this.props.explanation}
             onChangeText={explanation => this.props.setExplanation(explanation)}
             inlineImg= {inlineImg}
-            inputStyle= {inputStyle}
+            inputStyle= {[Styles.inputStyle,Styles.textStyle]}
             placeholderTextColor="black"
             underlineColorAndroid="transparent"
             multiline={true}
-            numberOfLines={5}
+            numberOfLines={1}
             />
           <Button
-            buttonStyle={button}
+            buttonStyle={[button,Styles.alignmentStyle]}
             onPress={this.takePermit.bind(this)}
             isLoading={this.props.isLoading}
             text="İZİN AL" />
@@ -128,24 +117,10 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 
 const styles = {
   container: {
-    backgroundColor: Colors.PageBackColor
-  },
-  inputStyle: {
-    backgroundColor: 'transparent',
-    width: DEVICE_WIDTH - 40,
-    height: 60,
-    marginTop: 30,
-    marginLeft: 15,
-    paddingTop: 1,
-    paddingLeft: 43,
-    borderRadius: 5,
-    borderBottomWidth: 1.25,
-    borderColor: Colors.DarkGreen
+   backgroundColor:Colors.lightWhite
   },
   button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.DarkGreen,
+    backgroundColor: Colors.blueberry,
     height: 40,
     width: DEVICE_WIDTH - 40,
     zIndex: 100,
@@ -157,7 +132,7 @@ const styles = {
     width: 22,
     height: 22,
     left: 23,
-    top: 47,
+    top: 45,
   }
 }
 

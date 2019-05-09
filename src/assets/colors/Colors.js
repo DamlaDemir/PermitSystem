@@ -7,9 +7,10 @@
     "inspinia_blue":"#1c84c6",
     "black":"#000000",
     "white":"#ffffff",
-    "transparent ":"#00000000",
-    "DarkGreen" : "#33691e",
-    "PageBackColor" : "#fafafa"
+    "darkRed":"#c62828",
+    "blueberry":"#6b7a8f",
+    "lightWhite":"#FEFFFF"
+
 
 };
 module.exports = colors;

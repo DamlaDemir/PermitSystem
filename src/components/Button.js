@@ -52,6 +52,9 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     backgroundColor: 'transparent',
+    fontWeight:"100",
+    fontSize:16,
+    fontFamily: "Montserrat-Light"
   }
 });
 
