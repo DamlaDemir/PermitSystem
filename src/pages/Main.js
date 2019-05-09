@@ -32,7 +32,7 @@ import NavigationService from '../navigation/NavigationServices';
 const MainNavigator = createStackNavigator({
   Login: {screen: LoginPage},
   Home: {screen: HomePage},
-});
+  });
 
 const MainContainer = createAppContainer(MainNavigator);
 
