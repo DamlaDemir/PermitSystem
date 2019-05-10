@@ -82,6 +82,7 @@
 		A9804810B773485289362E1A /* AngillaTattoo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BC88D0A4400B44F989CCF127 /* AngillaTattoo.ttf */; };
 		2F051BEEFB4046A68C490FE2 /* Montserrat-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 01C80D1C46A747BFBD7490DD /* Montserrat-ExtraLight.otf */; };
 		85B758A2F527412C99547E53 /* Montserrat-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = C81812B6E67F46878E383BBE /* Montserrat-Light.otf */; };
+		CF9029979B474F0593FF686A /* Montserrat-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2CB18E8088A84C238A17555D /* Montserrat-Medium.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -435,6 +436,7 @@
 		BC88D0A4400B44F989CCF127 /* AngillaTattoo.ttf */ = {isa = PBXFileReference; name = "AngillaTattoo.ttf"; path = "../src/assets/fonts/AngillaTattoo.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		01C80D1C46A747BFBD7490DD /* Montserrat-ExtraLight.otf */ = {isa = PBXFileReference; name = "Montserrat-ExtraLight.otf"; path = "../src/assets/fonts/Montserrat-ExtraLight.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		C81812B6E67F46878E383BBE /* Montserrat-Light.otf */ = {isa = PBXFileReference; name = "Montserrat-Light.otf"; path = "../src/assets/fonts/Montserrat-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2CB18E8088A84C238A17555D /* Montserrat-Medium.otf */ = {isa = PBXFileReference; name = "Montserrat-Medium.otf"; path = "../src/assets/fonts/Montserrat-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -749,6 +751,7 @@
 				BC88D0A4400B44F989CCF127 /* AngillaTattoo.ttf */,
 				01C80D1C46A747BFBD7490DD /* Montserrat-ExtraLight.otf */,
 				C81812B6E67F46878E383BBE /* Montserrat-Light.otf */,
+				2CB18E8088A84C238A17555D /* Montserrat-Medium.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1238,6 +1241,7 @@
 				A9804810B773485289362E1A /* AngillaTattoo.ttf in Resources */,
 				2F051BEEFB4046A68C490FE2 /* Montserrat-ExtraLight.otf in Resources */,
 				85B758A2F527412C99547E53 /* Montserrat-Light.otf in Resources */,
+				CF9029979B474F0593FF686A /* Montserrat-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

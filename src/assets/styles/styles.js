@@ -25,7 +25,24 @@ export default StyleSheet.create({
         paddingLeft: 40,
         borderRadius: 5,
         borderBottomWidth: 1.25,
-        borderColor: Colors.blueberry,    
-    }
+        borderColor: Colors.blueberry,  
+        height:33 
+    },
+    inlineImg: {
+        position: 'absolute',
+        zIndex: 200,
+        width: 22,
+        height: 22,
+        left: 20,
+        top: 30,
+      },
+    container: {
+         flex:1,
+         backgroundColor:Colors.lightWhite
+     },
+     buttonSize: {
+        height: 40,
+        width: DEVICE_WIDTH - 40,
+     }
 });
 

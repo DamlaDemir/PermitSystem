@@ -1,16 +1,14 @@
 import React,{Component} from 'react';
 import {Dimensions} from 'react-native';
 import { connect } from 'react-redux';
-import {Wallpaper,Logo,LoginForm,SignupSection,Button} from '../components';
+import {Wallpaper,Logo,SignupSection,Button} from '../components';
 import {usernameChanged,passwordChanged,login} from '../actions';
-import {KeyboardAvoidingView,Platform} from 'react-native';
+import {KeyboardAvoidingView,Platform,View} from 'react-native';
 import { CustomInput } from '../components';
 import UsernameImage from '../images/username.png';
 import PasswordImage from '../images/password.png';
 import Colors from '../assets/colors/Colors'
 import Styles from '../assets/styles/styles'
-
-//import {Actions} from 'react-native-router-flux';
 
  class LoginPage extends Component{
 
@@ -25,7 +23,7 @@ import Styles from '../assets/styles/styles'
       }
 
     render(){
-        const {container,button,text,inlineImg,inputStyle} =styles;
+        const {button,inlineImg,inputStyle} =styles;
         return(
             <Wallpaper>
             <Logo />
@@ -41,7 +39,7 @@ import Styles from '../assets/styles/styles'
             value={this.props.username}
             onChangeText={username => this.props.usernameChanged(username)}
             inlineImg= {inlineImg}
-            inputStyle= {[inputStyle,Styles.textStyle]}
+            inputStyle= {[inputStyle,Styles.textStyle,{color:'white'}]}
             placeholderTextColor="white"
             underlineColorAndroid="transparent"
             multiline={false}
@@ -55,9 +53,9 @@ import Styles from '../assets/styles/styles'
             autoCapitalize={'none'}
             autoCorrect={false}
             value={this.props.password}
-            onChangeText={password => this.props.usernameChanged(password)}
+            onChangeText={password => this.props.passwordChanged(password)}
             inlineImg= {inlineImg}
-            inputStyle= {[inputStyle,Styles.textStyle]}
+            inputStyle= {[inputStyle,Styles.textStyle,{color:'white'}]}
             placeholderTextColor="white"
             underlineColorAndroid="transparent"
             multiline={false}
@@ -65,11 +63,12 @@ import Styles from '../assets/styles/styles'
             />
             </KeyboardAvoidingView>
             <Button 
-            buttonStyle={button} 
+            buttonStyle={[button,Styles.alignmentStyle,Styles.buttonSize]} 
             onPress={this.Login.bind(this)} 
             isLoading={this.props.isLoading}
             text="GİRİŞ"/>
-            <SignupSection />
+            <View style={{flex:1}}></View>
+            {/* <SignupSection /> */}
             </Wallpaper>
         );
     }
@@ -79,17 +78,11 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 
 const styles = {
     button: {
-      alignItems: 'center',
-      justifyContent: 'center',
       backgroundColor: Colors.darkRed,
-      height: 40,
-      width: DEVICE_WIDTH - 40,
       borderRadius: 20,
-      zIndex: 100,
     }, 
      container: {
       flex: 1,
-      alignItems: 'center',
     },
     inlineImg: {
         position: 'absolute',

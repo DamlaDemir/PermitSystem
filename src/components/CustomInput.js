@@ -6,7 +6,6 @@ import { Icon } from 'native-base';
 class CustomInput extends Component {
     render() {
         console.log(this.props);
-        const { inputWrapper } = styles;
         let img;
         if (this.props.isIcon == true) {
             img = <Icon active name={this.props.source} style={this.props.InlineIcon} />
@@ -15,8 +14,7 @@ class CustomInput extends Component {
             img = <Image source={this.props.source} style={this.props.inlineImg} />
         }
         return (
-            <View style={inputWrapper}>
-
+            <View style={styles.container}>
                 {img}
                 <TextInput
                     style={this.props.inputStyle}
@@ -46,15 +44,9 @@ CustomInput.propTypes = {
     returnKeyType: PropTypes.string,
 };
 
-const DEVICE_WIDTH = Dimensions.get('window').width;
-//const DEVICE_HEIGHT = Dimensions.get('window').height;
-
-const styles = {
-    inputWrapper: {
-        flex: 1,
-        //borderWidth:5
+const styles ={
+    container: {
+        flex:1
     }
-
-};
-
+}
 export { CustomInput };

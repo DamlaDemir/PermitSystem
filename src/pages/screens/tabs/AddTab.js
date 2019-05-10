@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, TextInput, Dimensions, Image ,Alert} from 'react-native';
+import { View,KeyboardAvoidingView,Platform} from 'react-native';
 import { connect } from 'react-redux';
-import { Container, Text, Content, Icon } from 'native-base';
+import { Container, Content } from 'native-base';
 import { CustomDatePicker, Button, PickerSelect, CustomInput } from '../../../components';
 import { clickDatetimePicker, cancelDatetimePicker, setDateTime, selectPickerChecked,setExplanation,takePermit } from '../../../actions';
 import Colors from '../../../assets/colors/Colors';
@@ -44,10 +44,6 @@ import Styles from '../../../assets/styles/styles';
 
   };
   //datetime picker için
-  state = {
-    reason: "",
-    isLoading: false
-  };
 
   takePermit() {
     const permitParameters = {
@@ -60,84 +56,81 @@ import Styles from '../../../assets/styles/styles';
   }
 
   render() {
-    const { container, inputStyle, button, inlineImg } = styles;
+    const { inputStyle, button } = styles;
     return (
-      <Container style={container}>
+      <Container style={Styles.container}>
         <Content>
-          <CustomDatePicker
-            text="Başlangıç tarihini seçiniz"
-            onPress={() => this._showDateTimePicker('startTime','isDtpVisibleStartTime')}
-            isVisible={this.props.isDtpVisibleStartTime}
-            onConfirm={date => this._handleDatePicked({date},'isSelectedStartTime','isDtpVisibleStartTime')}
-            onCancel={() => this._hideDateTimePicker('isDtpVisibleStartTime')}
-            isSelected={this.props.isSelectedStartTime}
-            datetime={this.props.startTime}
-          />
-          <CustomDatePicker
-            text="Bitiş tarihini seçiniz"
-            onPress={() => this._showDateTimePicker('endTime','isDtpVisibleEndTime')}
-            isVisible={this.props.isDtpVisibleEndTime}
-            onConfirm={date => this._handleDatePicked({date},'isSelectedEndTime','isDtpVisibleEndTime')}
-            onCancel={() => this._hideDateTimePicker('isDtpVisibleEndTime')}
-            isSelected={this.props.isSelectedEndTime}
-            datetime={this.props.endTime}
-          />
-          <PickerSelect style={inputStyle}
-           onValueChange={value => {
-            this.props.selectPickerChecked(value.value);
-            }} />
-            <CustomInput
-            source={Explain}
-            secureTextEntry={false}
-            placeholder="İzin Alma Nedeni"
-            returnKeyType={'done'}
-            autoCapitalize={'none'}
-            autoCorrect={true}
-            value={this.props.explanation}
-            onChangeText={explanation => this.props.setExplanation(explanation)}
-            inlineImg= {inlineImg}
-            inputStyle= {[Styles.inputStyle,Styles.textStyle]}
-            placeholderTextColor="black"
-            underlineColorAndroid="transparent"
-            multiline={true}
-            numberOfLines={1}
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}>
+            <CustomDatePicker
+              text="Başlangıç tarihini seçiniz"
+              onPress={() => this._showDateTimePicker('startTime','isDtpVisibleStartTime')}
+              isVisible={this.props.isDtpVisibleStartTime}
+              onConfirm={date => this._handleDatePicked({date},'isSelectedStartTime','isDtpVisibleStartTime')}
+              onCancel={() => this._hideDateTimePicker('isDtpVisibleStartTime')}
+              isSelected={this.props.isSelectedStartTime}
+              datetime={this.props.startTime}
             />
-          <Button
-            buttonStyle={[button,Styles.alignmentStyle]}
-            onPress={this.takePermit.bind(this)}
-            isLoading={this.props.isLoading}
-            text="İZİN AL" />
+            <CustomDatePicker
+              text="Bitiş tarihini seçiniz"
+              onPress={() => this._showDateTimePicker('endTime','isDtpVisibleEndTime')}
+              isVisible={this.props.isDtpVisibleEndTime}
+              onConfirm={date => this._handleDatePicked({date},'isSelectedEndTime','isDtpVisibleEndTime')}
+              onCancel={() => this._hideDateTimePicker('isDtpVisibleEndTime')}
+              isSelected={this.props.isSelectedEndTime}
+              datetime={this.props.endTime}
+            />
+            <PickerSelect style={inputStyle}
+            onValueChange={value => {
+              this.props.selectPickerChecked(value.value);
+              }} />
+              <CustomInput
+              source={Explain}
+              secureTextEntry={false}
+              placeholder="İzin Alma Nedeni"
+              returnKeyType={'done'}
+              autoCapitalize={'none'}
+              autoCorrect={true}
+              value={this.props.explanation}
+              onChangeText={explanation => this.props.setExplanation(explanation)}
+              inlineImg= {Styles.inlineImg}
+              inputStyle= {[Styles.inputStyle,Styles.textStyle]}
+              placeholderTextColor="black"
+              underlineColorAndroid="transparent"
+              multiline={true}
+              numberOfLines={1}
+              />
+            <Button
+              buttonStyle={[button,Styles.alignmentStyle,Styles.buttonSize]}
+              onPress={this.takePermit.bind(this)}
+              isLoading={this.props.isLoading}
+              text="İZİN AL" />
+            </KeyboardAvoidingView>
         </Content>
       </Container>
     );
   }
 }
 
-const DEVICE_WIDTH = Dimensions.get('window').width;
-
 const styles = {
-  container: {
-   backgroundColor:Colors.lightWhite
-  },
   button: {
     backgroundColor: Colors.blueberry,
-    height: 40,
-    width: DEVICE_WIDTH - 40,
-    zIndex: 100,
     margin: 30
-  },
-  inlineImg: {
-    position: 'absolute',
-    zIndex: 99,
-    width: 22,
-    height: 22,
-    left: 23,
-    top: 45,
   }
 }
 
 const mapStateToProps = ({ addTabResponse }) => {
-  const { isDtpVisibleEndTime,isDtpVisibleStartTime,isSelectedStartTime,isSelectedEndTime, startTime,endTime,stateName,permitType,explanation,isLoading } = addTabResponse;
+  const { 
+    isDtpVisibleEndTime,
+    isDtpVisibleStartTime,
+    isSelectedStartTime,
+    isSelectedEndTime, 
+    startTime,
+    endTime,
+    stateName,
+    permitType,
+    explanation,
+    isLoading } = addTabResponse;
   return {
     isDtpVisibleEndTime,
     isDtpVisibleStartTime,

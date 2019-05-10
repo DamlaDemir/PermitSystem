@@ -1,15 +1,15 @@
 import React,{Component} from 'react';
 import {View,Image,Text} from 'react-native';
 import LogoImage from '../images/logo.png';
-import Styles from '../assets/styles/styles'
+import Styles from '../assets/styles/styles';
 
 class Logo extends Component{
     render(){
-        const {container,image,text}=styles;
+        const {container,image}=styles;
         return(
-            <View style={container}>
+            <View style={[container,Styles.alignmentStyle]}>
                 <Image style={image} source={LogoImage} />
-                <Text style={[Styles.textStyle,{fontWeight:'300', marginTop:20 ,color:'white'}]}>Yıllık İzin Takip Sistemine Hoşgeldiniz</Text>
+                <Text style={[Styles.textStyle,{marginTop:20 ,color:'white'}]}>Yıllık İzin Takip Sistemine Hoşgeldiniz</Text>
             </View>
         );
     }
@@ -17,10 +17,7 @@ class Logo extends Component{
 
 const styles ={
     container: {
-        flex: 2,
-        alignItems: 'center',
-        justifyContent: 'center',
-      
+        flex: 2
     },
     image: {
         width: 200,

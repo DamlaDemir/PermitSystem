@@ -22,12 +22,10 @@ class CustomDatePicker extends Component {
   }
  
   render () {
-    const {container,inlineImg}=styles;
-
     return (
-      <View style={container}>
-        <Image source={dateImg} style={inlineImg} />
-        <TouchableOpacity onPress={this.props.onPress} style={[Styles.inputStyle,{height: 30}]}>
+      <View style={Styles.container}>
+        <Image source={dateImg} style={Styles.inlineImg} />
+        <TouchableOpacity onPress={this.props.onPress} style={[Styles.inputStyle]}>
         {this.renderText()}
         </TouchableOpacity>
         <DateTimePicker
@@ -40,20 +38,6 @@ class CustomDatePicker extends Component {
     );
   }
  
-}
-const styles = {
-  container: {
-      flex:1
-  },
-  inlineImg: {
-      position: 'absolute',
-      zIndex: 200,
-      width: 22,
-      height: 22,
-      left: 20,
-      top: 30,
-
-    }
 }
 
 export {CustomDatePicker};

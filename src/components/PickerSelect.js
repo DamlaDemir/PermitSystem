@@ -1,12 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Text,Dimensions,Alert,Image } from 'react-native';
+import {View, StyleSheet, Text,Image } from 'react-native';
 import { CustomPicker } from 'react-native-custom-picker';
 import Colors from '../assets/colors/Colors';
 import SelectImage from '../images/check.png';
 import Styles from '../assets/styles/styles';
 
 class PickerSelect extends React.Component {
-  state = {choosenLabel: '', choosenindex: ''}
 
   render() {
     const options = [
@@ -16,7 +15,6 @@ class PickerSelect extends React.Component {
       },
     ]
     return (
-      <View>
         <CustomPicker
           placeholder={'Lütfen izin türünü seçiniz'}
           options={options}
@@ -27,7 +25,6 @@ class PickerSelect extends React.Component {
           //footerTemplate={this.renderFooter}
           onValueChange={this.props.onValueChange}
         />
-      </View>
     )
   }
   
@@ -40,66 +37,43 @@ class PickerSelect extends React.Component {
   }
 
   renderField(settings) {
-    debugger;
     const { selectedItem, defaultText, getLabel, clear } = settings
     return (
-      <View style={[Styles.inputStyle,{height:30,paddingLeft:5}]}>
-        <Image source={SelectImage} style={styles.inlineImg} />
-          {!selectedItem && <Text style={[Styles.textStyle,{left:35}]}>{defaultText}</Text>}
+      <View style={Styles.container}>
+        <Image source={SelectImage} style={Styles.inlineImg} />
+        <View style={Styles.inputStyle}>
+          {!selectedItem && <Text style={[Styles.textStyle,]}>{defaultText}</Text>}
           {selectedItem && (
-            <View style={styles.innerContainer}>
-              <Text style={[Styles.textStyle,{left:35}]}>
+          <Text style={Styles.textStyle}>
                 {getLabel(selectedItem)}
-              </Text>
-            </View>
+          </Text>
           )}
+      </View>
       </View>
     )
   }
 
   renderOption(settings) {
-    const { item, getLabel } = settings
+    const { item, getLabel } = settings;
     return (
       <View style={styles.optionContainer}>
-        <View style={styles.innerContainer}>
-          <Text style={[{alignSelf: 'flex-start'},Styles.textStyle]}>{getLabel(item)}</Text>
-        </View>
+          <Text style={[Styles.textStyle]}>{getLabel(item)}</Text>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    borderColor: Colors.DarkGreen,
-    borderWidth: 1,
-    padding: 15
-  },
-  innerContainer: {
-    flexDirection: 'row',
-    alignItems: 'stretch'
-  },
   headerFooterContainer: {
     padding: 10,
-    alignItems: 'center'
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor:Colors.blueberry,
+    borderRadius:5
   },
   optionContainer: {
     padding: 10,
-    borderBottomColor: 'grey',
-    borderBottomWidth: 1
-  },
-  optionInnerContainer: {
-    flex: 1,
-    flexDirection: 'row'
-  },
-  inlineImg: {
-  position: 'absolute',
-  zIndex: 99,
-  width: 22,
-  height: 22,
-  left: 3,
-  bottom:3
-},
+  }
 })
 
 export {PickerSelect};
