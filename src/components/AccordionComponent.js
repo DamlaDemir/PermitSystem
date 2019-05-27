@@ -4,6 +4,8 @@ import permitImage from '../images/permit.png';
 import {Image} from 'react-native';
 import Colors from '../assets/colors/Colors';
 import Styles from '../assets/styles/styles';
+import moment from 'moment';
+import PermitStatusEnum from '../common/Enums/PermitStatusEnum';
 
 class AccordionComponent extends Component {
  
@@ -11,7 +13,9 @@ class AccordionComponent extends Component {
     const {headerStyle,iconStyle,inlineImg,imageView,headerTextStyle,headerTextView}=styles;
     return (
       <View style={headerStyle}>
-      <View style={[imageView,{backgroundColor:item.title == "YILLIK İZİN" ? Colors.blueberry :Colors.darkRed},Styles.alignmentStyle]}><Image source={permitImage} style={inlineImg}/></View>
+      <View style={[imageView,{backgroundColor:item.title == "YILLIK İZİN" ? Colors.blueberry :Colors.darkRed},Styles.alignmentStyle]}>
+        <Image source={permitImage} style={inlineImg}/>
+      </View>
       <View style={[headerTextView,{borderColor:item.title == "YILLIK İZİN" ? Colors.blueberry :Colors.darkRed},Styles.alignmentStyle]}>
       <Text style={headerTextStyle}>
           {" "}{item.title}
@@ -33,15 +37,17 @@ class AccordionComponent extends Component {
             <Text style={[Styles.textStyle,{color:'white'}]}>5 Saat</Text>
         </View> 
         <View style={contentRightView}> 
-          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>İzin No: 23453</Text>
-          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>İzin Türü: Yıllık İzin</Text>
-          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>Başlangıç Tarihi:03.05.2019 12:30</Text>
-          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>Bitiş Tarihi:04.05.2019 13:30</Text>
-          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>Açıklama: Yıllık İzin Açıklaması</Text>
-          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>Talep Tarihi: 04.05.2019 13:30</Text>
+          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>İzin No: {item.content.PermitNo}</Text>
+          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>İzin Türü: {item.content.PermitType}</Text>
+          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>Başlangıç Tarihi: {moment(item.content.StartDate).format('DD.MM.YYYY HH:mm')}</Text>
+          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>Bitiş Tarihi: {moment(item.content.EndDate).format('DD.MM.YYYY HH:mm')}</Text>
+          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>Açıklama: {item.content.Reason}</Text>
+          <Text style={[Styles.textStyle,{fontSize:14},contentRightInnerView]}>Talep Tarihi: {moment(item.content.ReqeuestDate).format('DD.MM.YYYY HH:mm')}</Text>
           <View style={{flex:1,paddingLeft:5,margin:5,flexDirection:'row'}}>
             <Text style={[Styles.textStyle,{fontSize:14,flex:0.5}]}>Durum:</Text>
-            <Text style={[Styles.textStyle,{borderRadius:5,backgroundColor:Colors.inspinia_orange,width:120,fontSize:14}]}>Onay Bekleniyor</Text>
+            <Text style={[Styles.textStyle,{borderRadius:5,width:120,fontSize:14},item.content.Status == PermitStatusEnum.ONAYLANDI ? Styles.approval : item.content.Status == PermitStatusEnum.ONAYBEKLIYOR ? Styles.waitApproval : Styles.reject]}>
+            {item.content.Status == PermitStatusEnum.ONAYLANDI ? "Onaylandı" : item.content.Status == PermitStatusEnum.ONAYBEKLIYOR ? "Onay Bekliyor" : "Onaylanmadı"}
+            </Text>
           </View>
         </View>
       </View>   

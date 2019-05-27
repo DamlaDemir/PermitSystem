@@ -1,9 +1,13 @@
 
-import {USERNAME_CHANGED,PASSWORD_CHANGED ,LOGIN_CLICK, LOGIN_SUCCES} from '../actions/types';
+import {USERNAME_CHANGED,PASSWORD_CHANGED , LOADING,SHOW_TOAST} from '../actions/types';
 const INITIAL_STATE = {
     username : '',
     password: '',
-    loading:false
+    loading:false,
+    token: {},
+    showToastMessage: null,
+    showToastMesType: null
+
 }
 
 export default (state=INITIAL_STATE, action) =>{
@@ -14,11 +18,13 @@ export default (state=INITIAL_STATE, action) =>{
         case PASSWORD_CHANGED:
         return{...state,password:action.payload}
 
-        case LOGIN_CLICK:
-        return{...state,loading:true}
+        case LOADING:
+        return{...state,loading:action.payload}
 
-        case LOGIN_SUCCES:
-        return{...state,loading:false}
+        case SHOW_TOAST:
+            return{...state,showToastMessage:action.payload.message,showToastMesType:action.payload.messageType}
+
+
 
         default:
         return state;

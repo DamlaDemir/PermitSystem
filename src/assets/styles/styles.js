@@ -43,6 +43,21 @@ export default StyleSheet.create({
      buttonSize: {
         height: 40,
         width: DEVICE_WIDTH - 40,
-     }
+     },
+
+    //  showToastError : {
+    //     backgroundColor : Colors.white
+    //      },
+     
+    reject: {
+        backgroundColor:Colors.darkRed
+    },
+    approval : {
+        backgroundColor:Colors.inspinia_green
+    },
+    waitApproval : {
+        backgroundColor:Colors.inspinia_orange
+    }
+
 });
 

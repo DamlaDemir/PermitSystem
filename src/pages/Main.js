@@ -28,15 +28,27 @@ import LoginPage from './LoginPage';
 import HomePage from './Home';
 import NavigationService from '../navigation/NavigationServices';
 
-
-const MainNavigator = createStackNavigator({
-  Login: {screen: LoginPage},
-  Home: {screen: HomePage},
-  });
-
-const MainContainer = createAppContainer(MainNavigator);
-
 export default class Main extends Component {
+
+  componentWillMount(){
+  if(1 == 1){
+    const MainNavigator = createStackNavigator({
+      Login: {screen: LoginPage},
+      Home: {screen: HomePage},
+    });
+    MainContainer = createAppContainer(MainNavigator);  
+
+  }else {
+    const MainNavigator = createStackNavigator({
+      Home: {screen: HomePage},
+      Login: {screen: LoginPage},
+    });
+    MainContainer = createAppContainer(MainNavigator);  
+
+  }
+
+  }
+
   render() {
     const store=createStore(reducers,{},applyMiddleware(ReduxThunk));
     console.log(store.getState());

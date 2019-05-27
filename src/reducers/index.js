@@ -5,5 +5,5 @@ import addTabReducers from './addTabReducers';
 
 export default combineReducers({
     loginResponse:loginReducers,
-    addTabResponse: addTabReducers
+    addTabResponse: addTabReducers,
 });
