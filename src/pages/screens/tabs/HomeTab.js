@@ -3,7 +3,11 @@ import { View, StyleSheet } from 'react-native';
 import Pie from 'react-native-pie';
 import { Container, Text, Content, Icon, Card, CardItem } from 'native-base';
 
+
 class HomeTab extends Component {
+  constructor(props) {
+    super(props);
+  }
   static navigationOptions = {
     title: 'ANASAYFA',
     headerTitleStyle: { textAlign: 'center', alignSelf: 'center' },

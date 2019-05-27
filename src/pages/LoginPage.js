@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {Dimensions} from 'react-native';
 import { connect } from 'react-redux';
+import Toast, {DURATION} from 'react-native-easy-toast';
 import {Wallpaper,Logo,SignupSection,Button} from '../components';
 import {usernameChanged,passwordChanged,login} from '../actions';
 import {KeyboardAvoidingView,Platform,View} from 'react-native';
@@ -19,7 +20,16 @@ import Styles from '../assets/styles/styles'
     Login() {
       const {username,password}=this.props;
         console.log(this.props);
-        this.props.login({username,password});   
+        var data = {
+          grant_type: 'password',
+          Username: username,
+          Password: password
+        }
+        this.props.login(data); 
+        debugger;
+        // if(this.props.showToastMessage != null) 
+        // this.refs.toast.show(this.props.showToastMessage);
+ 
       }
 
     render(){
@@ -65,10 +75,20 @@ import Styles from '../assets/styles/styles'
             <Button 
             buttonStyle={[button,Styles.alignmentStyle,Styles.buttonSize]} 
             onPress={this.Login.bind(this)} 
-            isLoading={this.props.isLoading}
+            isLoading={this.props.loading}
             text="GİRİŞ"/>
             <View style={{flex:1}}></View>
-            {/* <SignupSection /> */}
+            {/* <Toast
+                    ref="toast"
+                    style={this.props.showToastMesType == 'error' ? Styles.showToastError : ""}
+                    //position='top'
+                    //positionValue={200}
+                    fadeInDuration={2000}
+                    fadeOutDuration={2000}
+                    opacity={0.8}
+                    //textStyle={{color:'white'}}
+                />          */}
+                   {/* <SignupSection /> */}
             </Wallpaper>
         );
     }
@@ -106,11 +126,13 @@ const styles = {
   };
 
   const mapStateToProps = ({loginResponse}) => {
-    const { username, password, loading } = loginResponse;
+    const { username, password, loading, showToastMessage,showToastMesType  } = loginResponse;
     return {
         username,
         password,
-        loading
+        loading,
+        showToastMessage,
+        showToastMesType
     };
 };
   export default connect(mapStateToProps, {usernameChanged,passwordChanged,login})(LoginPage);

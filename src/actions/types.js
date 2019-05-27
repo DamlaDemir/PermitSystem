@@ -18,6 +18,17 @@ export const SET_GSM2 = 'set_gsm2';
 export const SET_EMAIL = 'set_email';
 export const SET_ADDRESS = 'set_address';
 export const SAVE_PROFILE_CLICK='save_profile_click';
+export const GET_TOKEN='get_token';
+export const SAVE_TOKEN='save_token';
+export const REMOVE_TOKEN='remove_token';
+export const LOADING='loading';
+export const ERROR='error';
+export const SHOW_TOAST='showToast';
+
+
+
+
+
 
 
 
