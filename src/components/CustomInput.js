@@ -8,7 +8,7 @@ class CustomInput extends Component {
         console.log(this.props);
         let img;
         if (this.props.isIcon == true) {
-            img = <Icon active name={this.props.source} style={this.props.InlineIcon} />
+            img = <Icon active name={this.props.icon} style={this.props.InlineIcon} />
         }
         else {
             img = <Image source={this.props.source} style={this.props.inlineImg} />
@@ -17,6 +17,7 @@ class CustomInput extends Component {
             <View style={styles.container}>
                 {img}
                 <TextInput
+                    editable={this.props.editable}
                     style={this.props.inputStyle}
                     placeholder={this.props.placeholder}
                     secureTextEntry={this.props.secureTextEntry}
@@ -36,12 +37,14 @@ class CustomInput extends Component {
 }
 
 CustomInput.propTypes = {
-    source: PropTypes.number.isRequired,
+    source: PropTypes.number,
+    icon:PropTypes.string,
     placeholder: PropTypes.string.isRequired,
     secureTextEntry: PropTypes.bool,
     autoCorrect: PropTypes.bool,
     autoCapitalize: PropTypes.string,
     returnKeyType: PropTypes.string,
+    editable: PropTypes.bool,
 };
 
 const styles ={

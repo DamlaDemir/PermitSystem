@@ -9,7 +9,15 @@ export const DATETIME_SET='datetime_set';
 export const SELECT_PICKER_CHECKED='selectPicker_checked';
 export const SET_EXPLANATION='set_explanation';
 export const TAKE_PERMIT_CLICK='take_permit_click';
-
+export const SET_NAME='set_name';
+export const SET_LASTNAME='set_lastname';
+export const SET_USERNAME = 'set_username';
+export const SET_PASSWORD = 'set_password';
+export const SET_GSM1 = 'set_gsm1';
+export const SET_GSM2 = 'set_gsm2';
+export const SET_EMAIL = 'set_email';
+export const SET_ADDRESS = 'set_address';
+export const SAVE_PROFILE_CLICK='save_profile_click';
 
 
 

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { KeyboardAvoidingView, View, Image, Dimensions, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import UserImage from '../../../images/user.png'
 import { Button, CustomInput } from '../../../components';
+import Colors from '../../../assets/colors/Colors';
 import Styles from "../../../assets/styles/styles"
+import { setName, saveProfile } from '../../../actions';
 
 class ProfileTab extends Component {
     static navigationOptions = {
@@ -23,8 +26,16 @@ class ProfileTab extends Component {
         },
     };//Steack navigator özelliğinden gelen sayfadaki headerın özellikleri
 
+    saveProfile() {
+        const profileParameters = {
+          name:this.props.name,
+          
+        }
+        this.props.saveProfile(profileParameters);
+      }
+
     render() {
-        const { container, inputStyle, button, inlineImg, InlineIcon } = styles;
+        const { inputStyle, button, inlineImg, InlineIcon } = styles;
         return (
             <KeyboardAvoidingView>
             <ScrollView>
@@ -42,13 +53,13 @@ class ProfileTab extends Component {
                     </View>
                     <View style={{ flex: 9, alignItems:'center', justifyContent:'center' }}>
                         <CustomInput
-                            source="ios-contact"
+                            icon="ios-contact"
                             secureTextEntry={false}
                             placeholder="İsim : Merve"
                             returnKeyType={'done'}
                             autoCapitalize={'none'}
                             autoCorrect={true}
-                            value={this.props.explanation}
+                            value={this.props.name}
                             inputStyle={[inputStyle,Styles.textStyle]}
                             placeholderTextColor="black"
                             underlineColorAndroid="transparent"
@@ -56,15 +67,16 @@ class ProfileTab extends Component {
                             numberOfLines={5}
                             isIcon={true}
                             InlineIcon={inlineImg}
+                            onChangeText={name => this.props.setName(name)}
                         />
                         <CustomInput
-                            source="ios-contact"
+                            icon="ios-contact"
                             secureTextEntry={false}
                             placeholder="Soyisim : Yapnaz"
                             returnKeyType={'done'}
                             autoCapitalize={'none'}
-                            autoCorrect={true}
-                            value={this.props.explanation}
+                            // autoCorrect={true}
+                            // value={this.props.lastname}
                             InlineIcon={inlineImg}
                             inputStyle={[inputStyle,Styles.textStyle]}
                             placeholderTextColor="black"
@@ -74,7 +86,7 @@ class ProfileTab extends Component {
                             isIcon={true}
                         />
                         <CustomInput
-                            source="ios-contact"
+                            icon="ios-contact"
                             secureTextEntry={false}
                             placeholder="Kullanıcı Adı: MYapnaz"
                             returnKeyType={'done'}
@@ -90,7 +102,7 @@ class ProfileTab extends Component {
                             isIcon={true}
                         />
                         <CustomInput
-                            source="ios-lock"
+                            icon="ios-lock"
                             secureTextEntry={false}
                             placeholder="Parola"
                             returnKeyType={'done'}
@@ -104,9 +116,10 @@ class ProfileTab extends Component {
                             multiline={true}
                             numberOfLines={5}
                             isIcon={true}
+                            secureTextEntry={true} 
                         />
                         <CustomInput
-                            source="ios-call"
+                            icon="ios-call"
                             secureTextEntry={false}
                             placeholder="Gsm: 5546914761"
                             returnKeyType={'done'}
@@ -123,7 +136,7 @@ class ProfileTab extends Component {
                             isIcon={true}
                         />
                         <CustomInput
-                            source="ios-call"
+                            icon="ios-call"
                             secureTextEntry={false}
                             placeholder="Gsm -2: "
                             returnKeyType={'done'}
@@ -140,7 +153,7 @@ class ProfileTab extends Component {
                             isIcon={true}
                         />
                         <CustomInput
-                            source="ios-mail"
+                            icon="ios-mail"
                             secureTextEntry={false}
                             placeholder="Eposta: merveyapnaz@gmail.com"
                             returnKeyType={'done'}
@@ -157,7 +170,7 @@ class ProfileTab extends Component {
                             isIcon={true}
                         />
                         <CustomInput
-                            source="ios-pin"
+                            icon="ios-pin"
                             secureTextEntry={false}
                             placeholder="Adres: CTS"
                             returnKeyType={'done'}
@@ -172,10 +185,29 @@ class ProfileTab extends Component {
                             numberOfLines={5}
                             isIcon={true}
                         />
+                        <CustomInput
+                            icon="md-calendar"
+                            secureTextEntry={false}
+                            placeholder="İşe Başlama Tarihi : 25.02.2019"
+                            returnKeyType={'done'}
+                            autoCapitalize={'none'}
+                            autoCorrect={true}
+                            value={this.props.explanation}
+                            InlineIcon={inlineImg}
+                            inputStyle={[inputStyle,Styles.textStyle]}
+                            placeholderTextColor="black"
+                            underlineColorAndroid="transparent"
+                            multiline={true}
+                            numberOfLines={5}
+                            isIcon={true}
+                            editable = {false}
+                        />
                         <Button
-                            buttonStyle={button}
+                            buttonStyle={[button, Styles.buttonSize,Styles.alignmentStyle]}
+                            onPress={this.saveProfile.bind(this)}
                             isLoading={this.props.isLoading}
                             text="KAYDET" />
+                            
 
                     </View>
                 </View>
@@ -187,6 +219,10 @@ class ProfileTab extends Component {
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
 const styles = {
+    button: {
+        backgroundColor: Colors.blueberry,
+        margin: 30
+      },
     inputStyle: {
         backgroundColor: 'transparent',
         width: DEVICE_WIDTH - 40,
@@ -197,15 +233,6 @@ const styles = {
         borderRadius: 5,
         borderBottomWidth: 1.25,
         borderColor: "#6B7A8F"
-    },
-    button: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: "#6B7A8F",
-        height: 40,
-        width: DEVICE_WIDTH - 50,
-        zIndex: 100,
-        margin: 30
     },
     inlineImg: {
         justifyContent: 'flex-start',
@@ -218,4 +245,10 @@ const styles = {
     }
 }
 
-export default ProfileTab;
+const mapStateToProps = ({profileTabResponse}) => {
+     const { name } = profileTabResponse;
+    return {
+         name
+    };
+};
+export default connect(mapStateToProps, {setName,saveProfile})(ProfileTab);
