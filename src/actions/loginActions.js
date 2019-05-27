@@ -1,88 +1,79 @@
 
 import { Alert } from 'react-native';
-import {USERNAME_CHANGED,PASSWORD_CHANGED,LOGIN_SUCCES,LOADING,SHOW_TOAST} from './types';
+import { USERNAME_CHANGED, PASSWORD_CHANGED, LOGIN_SUCCES, LOADING, SHOW_TOAST } from './types';
 import NavigationService from '../navigation/NavigationServices';
 import PermitSystemAPI from '../services/PermitSystemAPI';
 import LocalStorageService from '../services/LocalStorageServices';
 import StorageEnum from '../common/Enums/StorageEnum';
 
 export const usernameChanged = (username) => {
-    return(dispatch) => {
+    return (dispatch) => {
         dispatch({
             type: USERNAME_CHANGED,
-            payload : username
+            payload: username
         });
     }
 };
 
 export const passwordChanged = (password) => {
-    return(dispatch) => {
+    return (dispatch) => {
         dispatch({
             type: PASSWORD_CHANGED,
-            payload : password
-        }); 
+            payload: password
+        });
     }
 };
 
- alertMessage = (title,message) => {
+alertMessage = (title, message) => {
     Alert.alert(
         title,
         message,//mesaj içeriği
         [
-            {text: 'Tamam', onPress: () => null } //üstünde tamam yazan buton çıkcak
+            { text: 'Tamam', onPress: () => null } //üstünde tamam yazan buton çıkcak
         ]
     );
 }
 
 export const login = (data) => {
-    return(dispatch) => {
+    return (dispatch) => {
 
-        if(data.Username==='' || data.Password==='')
-        {
-            alertMessage('Mesaj','Her iki alanda dolu olmalı!');       
+        if (data.Username === '' || data.Password === '') {
+            alertMessage('Mesaj', 'Her iki alanda dolu olmalı!');
         }
-        else{
+        else {
             dispatch(loading(true));
-            PermitSystemAPI.getToken(data) 
-            .then(x => {
-                dispatch(showToast(null , 'error'));
-                console.log(x.data.access_token);
-                LocalStorageService.setItemAsync(
-                    StorageEnum.TOKEN,
-                    x.data.access_token
-                  );
-                let loginRequest= {};
-                loginRequest.Username=data.Username;
-                PermitSystemAPI.postValue("api/Values/GetUser",loginRequest)
-                .then(response  => {
-                    if(response.data.Username != null){
-                        LocalStorageService.setItemAsync(StorageEnum.USER, response.data);
-                        loginSucces(dispatch);
-                        dispatch(loading(false));
-                    } 
-                }).catch(err => {
-                    debugger;
-                    console.log(err);
+            PermitSystemAPI.getToken(data)
+                .then(x => {
+                    dispatch(showToast(null, 'error'));
+                    console.log(x.data.access_token);
+                    LocalStorageService.setItemAsync(
+                        StorageEnum.TOKEN,
+                        x.data.access_token
+                    );
+                    let loginRequest = {};
+                    loginRequest.Username = data.Username;
+                    PermitSystemAPI.postValue("api/Values/GetUser", loginRequest, response => {
+                        if (response.data.Username != null) {
+                            LocalStorageService.setItemAsync(StorageEnum.USER, response.data);
+                            loginSucces(dispatch);
+                            dispatch(loading(false));
+                        }
+                    }, err => {
+                        alertMessage('Mesaj', 'Kullanıcı bulunamadı.');
+                    });
+
+                }).catch(x => {
+                    //dispatch(showToast(x.response.data.error_description , 'error'));
+                    alertMessage('Mesaj', 'Kullanıcı adı veya şifre yanlış!');
+                    dispatch(loading(false));
                 });
-             
-            }).catch(x => {
-                debugger;
-                //dispatch(showToast(x.response.data.error_description , 'error'));
-                alertMessage('Mesaj','Kullanıcı adı veya şifre yanlış!');       
-                dispatch(loading(false));
-
-              });
-
         }
-
-
-
-    }   
+    }
 };
 
-const loginSucces = (dispatch/*, user*/ ) => {
+const loginSucces = (dispatch/*, user*/) => {
     dispatch({
-        type:LOGIN_SUCCES,
+        type: LOGIN_SUCCES,
         //payload:user
     });
     NavigationService.navigate('Home'/*, { userName: 'Lucy' }*/);
@@ -94,9 +85,9 @@ export const loading = bool => ({
     payload: bool,
 });
 
-export const showToast = (message,messageType) => ({
+export const showToast = (message, messageType) => ({
     type: SHOW_TOAST,
-    payload: {message,messageType},
+    payload: { message, messageType },
 });
 
 
