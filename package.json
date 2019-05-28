@@ -16,7 +16,7 @@
     "react-native": "^0.59.3",
     "react-native-custom-picker": "^0.3.1",
     "react-native-easy-toast": "^1.2.0",
-    "react-native-gesture-handler": "^1.1.0",
+    "react-native-gesture-handler": "^1.2.1",
     "react-native-linear-gradient": "^2.5.4",
     "react-native-modal-datetime-picker": "^6.1.0",
     "react-native-paper": "^2.15.1",
@@ -25,7 +25,7 @@
     "react-native-router-flux": "^4.0.6",
     "react-native-storage": "^1.0.1",
     "react-native-vector-icons": "^6.4.2",
-    "react-navigation": "^3.9.1",
+    "react-navigation": "^3.11.0",
     "react-redux": "^7.0.2",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"

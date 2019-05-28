@@ -39,7 +39,6 @@ import Styles from '../../../assets/styles/styles';
   } 
 
   _handleDatePicked  (datetime,isSelected,selectedDtp)  {
-    debugger;
     this.props.setDateTime({stateName:this.props.stateName,datetime:datetime,isSelected:isSelected,selectedDtp:selectedDtp});
 
   };

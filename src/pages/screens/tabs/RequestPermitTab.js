@@ -9,20 +9,20 @@ import StorageEnum from '../../../common/Enums/StorageEnum';
 import PermitTypeEnum from '../../../common/Enums/PermitTypeEnum';
 import LocalStorageService from '../../../services/LocalStorageServices';
 
-class ListTab extends Component {
+export default class RequestPermitTab extends Component {
     constructor(props) {
         super(props)
         this.state = {
             dataArray: [],
         };
     }
-    setDataArray(response,user) {
+    setDataArray(response) {
         var permitList = [];
         response.data.forEach(permit => {
             console.log(permit.PermitType);
             var permitType = permit.PermitType == PermitTypeEnum.YILLIK ? "YILLIK İZİN" : "DOĞUM İZNİ";
             var permitObj = {};
-            permitObj.title = user.value.IsAdmin ? permit.PersonelFirstName + " " + permit.PersonelLastName : permitType;
+            permitObj.title = permit.PersonelFirstName + " " + permit.PersonelLastName;
             permitObj.content = {
                 PermitNo: permit.PermitNo,
                 PermitType: permitType,
@@ -38,25 +38,15 @@ class ListTab extends Component {
     }
     componentWillMount() {
         LocalStorageService.getItemAsync(StorageEnum.USER).then(user => {
-            if (user.value.IsAdmin) {
-                PermitSystemAPI.getValue("api/Values/GetAllPermits", response => {
-                    this.setDataArray(response,user);
-                }, err => {
-                    //apide catch'e düşünce burdada catch'e düşer id gitmezse mesela apiye catch'e düşer
-                });
-
-            } else {
-                let permitRequest = { personelId: user.value.Id };
-                PermitSystemAPI.postValue("api/Values/GetUserPermits", permitRequest, response => {
-                this.setDataArray(response,user);
-                }, err => {
-                    //apide catch'e düşünce burdada catch'e düşer id gitmezse mesela apiye catch'e düşer
-                });
-            }
+            PermitSystemAPI.getValue("api/Values/GetRequestPermits", response => {
+                this.setDataArray(response);
+            }, err => {
+                //apide catch'e düşünce burdada catch'e düşer id gitmezse mesela apiye catch'e düşer
+            });
         });
     }
     static navigationOptions = {
-        title: 'İzin Listesi',
+        title: 'İzin Talepleri',
         headerRight: (<View></View>),
         headerStyle: {
             backgroundColor: Colors.lightWhite,
@@ -70,11 +60,10 @@ class ListTab extends Component {
         return (
             <Container style={Styles.container}>
                 <Content>
-                    <AccordionComponent dataArray={this.state.dataArray} ShowStatusButton={false}/>
+                    <AccordionComponent dataArray={this.state.dataArray} ShowStatusButton={true} />
                 </Content>
             </Container>
         );
     }
 }
 
-export default ListTab;

@@ -26,7 +26,6 @@ import Styles from '../assets/styles/styles'
           Password: password
         }
         this.props.login(data); 
-        debugger;
         // if(this.props.showToastMessage != null) 
         // this.refs.toast.show(this.props.showToastMessage);
  
