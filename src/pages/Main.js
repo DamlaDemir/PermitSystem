@@ -18,10 +18,10 @@ export default class Main extends Component{
   }
 }*/
 
-import React,{Component} from 'react';
-import {createStackNavigator, createAppContainer} from 'react-navigation';
+import React, { Component } from 'react';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Provider } from 'react-redux';//provider'ın import edilmesi
-import { createStore, applyMiddleware  } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import reducers from '../reducers';
 import LoginPage from './LoginPage';
@@ -30,34 +30,23 @@ import NavigationService from '../navigation/NavigationServices';
 
 export default class Main extends Component {
 
-  componentWillMount(){
-  if(1 == 1){
+  componentWillMount() {
     const MainNavigator = createStackNavigator({
-      Login: {screen: LoginPage},
-      Home: {screen: HomePage},
+      Login: { screen: LoginPage },
+      Home: { screen: HomePage },
     });
-    MainContainer = createAppContainer(MainNavigator);  
-
-  }else {
-    const MainNavigator = createStackNavigator({
-      Home: {screen: HomePage},
-      Login: {screen: LoginPage},
-    });
-    MainContainer = createAppContainer(MainNavigator);  
-
-  }
-
+    MainContainer = createAppContainer(MainNavigator);
   }
 
   render() {
-    const store=createStore(reducers,{},applyMiddleware(ReduxThunk));
+    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     console.log(store.getState());
-        return (
+    return (
       <Provider store={store}>
-        <MainContainer   
-         ref={navigatorRef => {
-          NavigationService.setTopLevelNavigator(navigatorRef);
-        }} />
+        <MainContainer
+          ref={navigatorRef => {
+            NavigationService.setTopLevelNavigator(navigatorRef);
+          }} />
       </Provider>
     );
   }

@@ -57,6 +57,10 @@ export default StyleSheet.create({
     },
     waitApproval : {
         backgroundColor:Colors.inspinia_orange
+    },
+    statusButton : {
+        borderRadius: 20,
+        width:80
     }
 
 });
