@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
-import { View,KeyboardAvoidingView,Platform} from 'react-native';
+import { View, KeyboardAvoidingView, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content } from 'native-base';
 import { CustomDatePicker, Button, PickerSelect, CustomInput } from '../../../components';
-import { clickDatetimePicker, cancelDatetimePicker, setDateTime, selectPickerChecked,setExplanation,takePermit } from '../../../actions';
+import { clickDatetimePicker, cancelDatetimePicker, setDateTime, selectPickerChecked, setExplanation, takePermit } from '../../../actions';
 import Colors from '../../../assets/colors/Colors';
 import Explain from '../../../images/explain.png';
 import Styles from '../../../assets/styles/styles';
+import LocalStorageService from '../../../services/LocalStorageServices';
+import StorageEnum from '../../../common/Enums/StorageEnum';
+import PermitStatusEnum from '../../../common/Enums/PermitStatusEnum';
 
- class AddTab extends Component {
+class AddTab extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this._showDateTimePicker = this._showDateTimePicker.bind(this);
     this._hideDateTimePicker = this._hideDateTimePicker.bind(this);
-    this._handleDatePicked = this._handleDatePicked.bind(this); 
+    this._handleDatePicked = this._handleDatePicked.bind(this);
   }
   static navigationOptions = {
     title: 'İzin Ekleme Sayfası',
@@ -29,29 +32,34 @@ import Styles from '../../../assets/styles/styles';
   };//Steack navigator özelliğinden gelen sayfadaki headerın özellikleri
 
   //datetime picker için
-  _showDateTimePicker (stateName,selectedDtp) {
-    this.props.clickDatetimePicker({stateName,selectedDtp});
+  _showDateTimePicker(stateName, selectedDtp) {
+    this.props.clickDatetimePicker({ stateName, selectedDtp });
     console.log(this.props.stateName);
   };
 
-  _hideDateTimePicker (selectedDtp) {
+  _hideDateTimePicker(selectedDtp) {
     this.props.cancelDatetimePicker(selectedDtp);
-  } 
+  }
 
-  _handleDatePicked  (datetime,isSelected,selectedDtp)  {
-    this.props.setDateTime({stateName:this.props.stateName,datetime:datetime,isSelected:isSelected,selectedDtp:selectedDtp});
+  _handleDatePicked(datetime, isSelected, selectedDtp) {
+    this.props.setDateTime({ stateName: this.props.stateName, datetime: datetime, isSelected: isSelected, selectedDtp: selectedDtp });
 
   };
   //datetime picker için
 
   takePermit() {
-    const permitParameters = {
-      startTime:this.props.startTime,
-      endTime: this.props.endTime,
-      permitType:this.props.permitType,
-      explanation:this.props.explanation
-    }
-    this.props.takePermit(permitParameters);
+    LocalStorageService.getItemAsync(StorageEnum.USER).then(user => {
+      const permitParameters = {
+        StartDate: this.props.startTime,
+        EndDate: this.props.endTime,
+        AnnualType_sno: this.props.permitType,
+        Reason: this.props.explanation,
+        Personnel_sno: user.value.Id,
+        Status: PermitStatusEnum.ONAYBEKLIYOR,
+        RequestDate : new Date()
+      }
+      this.props.takePermit(permitParameters);
+    });
   }
 
   render() {
@@ -59,31 +67,31 @@ import Styles from '../../../assets/styles/styles';
     return (
       <Container style={Styles.container}>
         <Content>
-        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
-          keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}>
+          <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}>
             <CustomDatePicker
               text="Başlangıç tarihini seçiniz"
-              onPress={() => this._showDateTimePicker('startTime','isDtpVisibleStartTime')}
+              onPress={() => this._showDateTimePicker('startTime', 'isDtpVisibleStartTime')}
               isVisible={this.props.isDtpVisibleStartTime}
-              onConfirm={date => this._handleDatePicked({date},'isSelectedStartTime','isDtpVisibleStartTime')}
+              onConfirm={date => this._handleDatePicked({ date }, 'isSelectedStartTime', 'isDtpVisibleStartTime')}
               onCancel={() => this._hideDateTimePicker('isDtpVisibleStartTime')}
               isSelected={this.props.isSelectedStartTime}
               datetime={this.props.startTime}
             />
             <CustomDatePicker
               text="Bitiş tarihini seçiniz"
-              onPress={() => this._showDateTimePicker('endTime','isDtpVisibleEndTime')}
+              onPress={() => this._showDateTimePicker('endTime', 'isDtpVisibleEndTime')}
               isVisible={this.props.isDtpVisibleEndTime}
-              onConfirm={date => this._handleDatePicked({date},'isSelectedEndTime','isDtpVisibleEndTime')}
+              onConfirm={date => this._handleDatePicked({ date }, 'isSelectedEndTime', 'isDtpVisibleEndTime')}
               onCancel={() => this._hideDateTimePicker('isDtpVisibleEndTime')}
               isSelected={this.props.isSelectedEndTime}
               datetime={this.props.endTime}
             />
             <PickerSelect style={inputStyle}
-            onValueChange={value => {
-              this.props.selectPickerChecked(value.value);
+              onValueChange={value => {
+                this.props.selectPickerChecked(value.value);
               }} />
-              <CustomInput
+            <CustomInput
               source={Explain}
               secureTextEntry={false}
               placeholder="İzin Alma Nedeni"
@@ -92,19 +100,19 @@ import Styles from '../../../assets/styles/styles';
               autoCorrect={true}
               value={this.props.explanation}
               onChangeText={explanation => this.props.setExplanation(explanation)}
-              inlineImg= {Styles.inlineImg}
-              inputStyle= {[Styles.inputStyle,Styles.textStyle]}
+              inlineImg={Styles.inlineImg}
+              inputStyle={[Styles.inputStyle, Styles.textStyle]}
               placeholderTextColor="black"
               underlineColorAndroid="transparent"
               multiline={true}
               numberOfLines={1}
-              />
+            />
             <Button
-              buttonStyle={[button,Styles.alignmentStyle,Styles.buttonSize]}
+              buttonStyle={[button, Styles.alignmentStyle, Styles.buttonSize]}
               onPress={this.takePermit.bind(this)}
               isLoading={this.props.isLoading}
               text="İZİN AL" />
-            </KeyboardAvoidingView>
+          </KeyboardAvoidingView>
         </Content>
       </Container>
     );
@@ -119,17 +127,18 @@ const styles = {
 }
 
 const mapStateToProps = ({ addTabResponse }) => {
-  const { 
+  const {
     isDtpVisibleEndTime,
     isDtpVisibleStartTime,
     isSelectedStartTime,
-    isSelectedEndTime, 
+    isSelectedEndTime,
     startTime,
     endTime,
     stateName,
     permitType,
     explanation,
-    isLoading } = addTabResponse;
+    isLoading 
+  } = addTabResponse;
   return {
     isDtpVisibleEndTime,
     isDtpVisibleStartTime,
@@ -145,4 +154,4 @@ const mapStateToProps = ({ addTabResponse }) => {
   };
 };
 
-export default connect(mapStateToProps, { clickDatetimePicker, cancelDatetimePicker, setDateTime,selectPickerChecked,setExplanation,takePermit })(AddTab);
+export default connect(mapStateToProps, { clickDatetimePicker, cancelDatetimePicker, setDateTime, selectPickerChecked, setExplanation, takePermit })(AddTab);

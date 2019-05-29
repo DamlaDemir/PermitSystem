@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Container, Text, Content, Icon } from 'native-base';
 import { AccordionComponent } from '../../../components';
+import { connect } from 'react-redux';
 import Colors from '../../../assets/colors/Colors';
 import Styles from '../../../assets/styles/styles';
 import PermitSystemAPI from '../../../services/PermitSystemAPI';
 import StorageEnum from '../../../common/Enums/StorageEnum';
 import PermitTypeEnum from '../../../common/Enums/PermitTypeEnum';
 import LocalStorageService from '../../../services/LocalStorageServices';
+import { takePermit } from '../../../actions';
+
 
 class ListTab extends Component {
     constructor(props) {
@@ -36,7 +39,8 @@ class ListTab extends Component {
         });
         this.setState({ dataArray: permitList });
     }
-    componentWillMount() {
+
+    getPermitList(){
         LocalStorageService.getItemAsync(StorageEnum.USER).then(user => {
             if (user.value.IsAdmin) {
                 PermitSystemAPI.getValue("api/Values/GetAllPermits", response => {
@@ -55,6 +59,7 @@ class ListTab extends Component {
             }
         });
     }
+   
     static navigationOptions = {
         title: 'İzin Listesi',
         headerRight: (<View></View>),
@@ -67,6 +72,9 @@ class ListTab extends Component {
         headerTitleStyle: Styles.textStyle
     };
     render() {
+        if(this.props.loadPermitList){
+            this.getPermitList();
+        }
         return (
             <Container style={Styles.container}>
                 <Content>
@@ -76,5 +84,12 @@ class ListTab extends Component {
         );
     }
 }
-
-export default ListTab;
+const mapStateToProps = ({ addTabResponse }) => {
+    const {loadPermitList} = addTabResponse;
+    return {
+        loadPermitList
+    };
+  };
+  
+  export default connect(mapStateToProps, {takePermit })(ListTab);
+  

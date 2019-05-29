@@ -3,7 +3,7 @@ import constant from "../common/constant";
 import qs from "qs";
 import LocalStorageService from "../services/LocalStorageServices";
 import StorageEnum from "../common/Enums/StorageEnum";
-import BaseComponent from '../pages/Base/index';
+import Base from '../common/Base/index';
 
 export default class PermitSystemAPI {
 
@@ -30,7 +30,7 @@ export default class PermitSystemAPI {
       SuccessFunc(x);
     }).catch(x => {
       if (x.response.status == 401)
-      BaseComponent.AuthFunc();
+      Base.AuthFunc();
       else
       ErrorFunc(x);
     });
@@ -47,7 +47,7 @@ export default class PermitSystemAPI {
       SuccessFunc(x);
     }).catch(x => {
       if (x.response.status == 401)
-      BaseComponent.AuthFunc();
+      Base.AuthFunc();
       else
       ErrorFunc(x);
     });

@@ -9,6 +9,17 @@ class BaseComponent extends Component {
     static AuthFunc(){
     NavigationService.navigate('Login');
     }
+
+    static AlertMessage = (title, message) => {
+      Alert.alert(
+          title,
+          message,//mesaj içeriği
+          [
+              { text: 'Tamam', onPress: () => null } //üstünde tamam yazan buton çıkcak
+          ]
+      );
+  }
+  
     render(t) {
         return t;
       }

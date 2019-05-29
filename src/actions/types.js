@@ -24,6 +24,9 @@ export const REMOVE_TOKEN='remove_token';
 export const LOADING='loading';
 export const ERROR='error';
 export const SHOW_TOAST='showToast';
+export const ADDPERMIT_LOADING='addPermitLoading';
+export const LOAD_PERMIT_LIST='loadPermitList';
+
 
 
 

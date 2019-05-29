@@ -5,6 +5,7 @@ import NavigationService from '../navigation/NavigationServices';
 import PermitSystemAPI from '../services/PermitSystemAPI';
 import LocalStorageService from '../services/LocalStorageServices';
 import StorageEnum from '../common/Enums/StorageEnum';
+import Base from '../common/Base/index';
 
 export const usernameChanged = (username) => {
     return (dispatch) => {
@@ -24,21 +25,11 @@ export const passwordChanged = (password) => {
     }
 };
 
-alertMessage = (title, message) => {
-    Alert.alert(
-        title,
-        message,//mesaj içeriği
-        [
-            { text: 'Tamam', onPress: () => null } //üstünde tamam yazan buton çıkcak
-        ]
-    );
-}
-
 export const login = (data) => {
     return (dispatch) => {
 
         if (data.Username === '' || data.Password === '') {
-            alertMessage('Mesaj', 'Her iki alanda dolu olmalı!');
+            Base.AlertMessage('Mesaj', 'Her iki alanda dolu olmalı!');
         }
         else {
             dispatch(loading(true));
