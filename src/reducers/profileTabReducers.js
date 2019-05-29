@@ -1,4 +1,4 @@
-import { SET_NAME, SET_LASTNAME, SET_USERNAME, SET_PASSWORD, SET_GSM1, SET_GSM2, SET_EMAIL, SET_ADDRESS, SAVE_PROFILE_CLICK } from '../actions/types';
+import { SET_NAME, SET_LASTNAME, SET_USERNAME, SET_PASSWORD, SET_GSM1, SET_GSM2, SET_EMAIL, SET_ADDRESS,SET_STARTDATE, SAVE_PROFILE_CLICK } from '../actions/types';
 
 const INITIAL_STATE = {
     name: '',
@@ -8,7 +8,8 @@ const INITIAL_STATE = {
     gsm1: '',
     gsm2: '',
     email: '',
-    address: ''
+    address: '',
+    startdate: ''
 }
 
 
@@ -39,8 +40,11 @@ export default (state = INITIAL_STATE, action) => {
         case SET_ADDRESS:
             return { ...state, address: action.payload }
 
-            case SAVE_PROFILE_CLICK:
-        return{...state,isLoading:true}      
+        case SET_STARTDATE:
+            return { ...state, startdate: action.payload }
+
+        case SAVE_PROFILE_CLICK:
+            return { ...state, isLoading: true }
 
         default:
             return state;

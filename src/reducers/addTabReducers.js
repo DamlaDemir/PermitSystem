@@ -14,7 +14,6 @@ const INITIAL_STATE = {
 }
 
 export default (state=INITIAL_STATE, action) =>{
-    debugger;
     switch(action.type) {
         case DATETIME_CLICK:
         return{...state,stateName:action.payload.stateName,[action.payload.selectedDtp]:true}

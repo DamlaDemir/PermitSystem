@@ -17,6 +17,7 @@ export const SET_GSM1 = 'set_gsm1';
 export const SET_GSM2 = 'set_gsm2';
 export const SET_EMAIL = 'set_email';
 export const SET_ADDRESS = 'set_address';
+export const SET_STARTDATE = 'set_startadress';
 export const SAVE_PROFILE_CLICK='save_profile_click';
 export const GET_TOKEN='get_token';
 export const SAVE_TOKEN='save_token';
