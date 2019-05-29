@@ -14,9 +14,14 @@ const INITIAL_STATE = {
     loadPermitList: true,
 }
 
+<<<<<<< HEAD
 export default (state = INITIAL_STATE, action) => {
     debugger;
     switch (action.type) {
+=======
+export default (state=INITIAL_STATE, action) =>{
+    switch(action.type) {
+>>>>>>> 691199e81ae7964141db9dbb73b7ae0c7998b38a
         case DATETIME_CLICK:
             return { ...state, stateName: action.payload.stateName, [action.payload.selectedDtp]: true }
 

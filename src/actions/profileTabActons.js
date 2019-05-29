@@ -1,8 +1,6 @@
-import {SET_NAME,SET_LASTNAME,SET_USERNAME,SET_PASSWORD,SET_GSM1,SET_GSM2,SET_EMAIL,SET_ADDRESS, SAVE_PROFILE_CLICK} from './types';
+import {SET_NAME,SET_LASTNAME,SET_USERNAME,SET_PASSWORD,SET_GSM1,SET_GSM2,SET_EMAIL,SET_ADDRESS,SET_STARTDATE, SAVE_PROFILE_CLICK} from './types';
 
 export const setName = (name) => {
-    console.log(name);
-    
     return(dispatch) => {
         dispatch({
             type: SET_NAME,
@@ -24,7 +22,6 @@ export const setLastName = (lastname) => {
 }
 
 export const setUserName = (username) => {
-    console.log(username);
     return(dispatch) => {
         dispatch({
             type: SET_USERNAME,
@@ -79,7 +76,6 @@ export const setEmail = (email) => {
 }
 
 export const setAddress = (address) => {
-    console.log(address);
     return(dispatch) => {
         dispatch({
             type: SET_ADDRESS,
@@ -89,8 +85,17 @@ export const setAddress = (address) => {
     }
 }
 
+export const setStartdate = (startdate) => {
+    return(dispatch) => {
+        dispatch({
+            type: SET_STARTDATE,
+            payload: startdate
+        });
+
+    }
+}
+
 export const saveProfile = (profileParameters) => {
-    debugger;
     return(dispatch) => {
         dispatch({
             type: SAVE_PROFILE_CLICK
