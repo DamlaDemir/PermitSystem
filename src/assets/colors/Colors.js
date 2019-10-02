@@ -9,7 +9,9 @@
     "white":"#ffffff",
     "darkRed":"#c62828",
     "blueberry":"#6b7a8f",
-    "lightWhite":"#FEFFFF"
+    "lightWhite":"#FEFFFF",
+    "lightGrey":"#F5F5F5"
+
 
 
 };
