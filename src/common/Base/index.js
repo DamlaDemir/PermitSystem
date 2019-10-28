@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
+import {Alert} from 'react-native';
 import NavigationService from '../../navigation/NavigationServices';
+import LocalStorageService from '../../services/LocalStorageServices';
+import StorageEnum from '../../common/Enums/StorageEnum';
 
 class BaseComponent extends Component {
     constructor(props) {
@@ -7,7 +10,11 @@ class BaseComponent extends Component {
     }
 
     static AuthFunc(){
-    NavigationService.navigate('Login');
+    LocalStorageService.setItemAsync(
+        StorageEnum.TOKEN,
+        ""
+    );
+    NavigationService.navigate('Auth');
     }
 
     static AlertMessage = (title, message) => {
@@ -15,7 +22,7 @@ class BaseComponent extends Component {
           title,
           message,//mesaj içeriği
           [
-              { text: 'Tamam', onPress: () => null } //üstünde tamam yazan buton çıkcak
+              { text: 'Tamam', onPress: () => null } 
           ]
       );
   }

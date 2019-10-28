@@ -1,11 +1,12 @@
 
-import { Alert } from 'react-native';
-import { USERNAME_CHANGED, PASSWORD_CHANGED, LOGIN_SUCCES, LOADING, SHOW_TOAST } from './types';
+import { USERNAME_CHANGED, PASSWORD_CHANGED, LOGIN_SUCCES, LOGIN_LOADING } from './types';
 import NavigationService from '../../navigation/NavigationServices';
+import DropDownAlertServices from '../../services/DropdownAlertServices';
 import PermitSystemAPI from '../../services/PermitSystemAPI';
 import LocalStorageService from '../../services/LocalStorageServices';
 import StorageEnum from '../../common/Enums/StorageEnum';
-import Base from '../../common/Base/index';
+import Constant from '../../common/constant';
+import strings from '../../assets/strings/strings';
 
 export const usernameChanged = (username) => {
     return (dispatch) => {
@@ -24,19 +25,26 @@ export const passwordChanged = (password) => {
         });
     }
 };
+export const loginLoading = bool => ({
+    type: LOGIN_LOADING,
+    payload: bool,
+});
 
 export const login = (data) => {
     return (dispatch) => {
 
         if (data.Username === '' || data.Password === '') {
-            Base.AlertMessage('Mesaj', 'Her iki alanda dolu olmalı!');
+            DropDownAlertServices.alert(
+                Constant.msgType.warning,
+                strings.LABEL.UYARI,
+                strings.MSG.ALANLAR_BOS_GECILEMEZ,
+                Constant.MESSAGE_DURATION
+              );  
         }
         else {
-            dispatch(loading(true));
+            dispatch(loginLoading(true));
             PermitSystemAPI.getToken(data)
                 .then(x => {
-                    dispatch(showToast(null, 'error'));
-                    console.log(x.data.access_token);
                     LocalStorageService.setItemAsync(
                         StorageEnum.TOKEN,
                         x.data.access_token
@@ -46,39 +54,41 @@ export const login = (data) => {
                     PermitSystemAPI.postValue("api/Values/GetUser", loginRequest, response => {
                         if (response.data.Username != null) {
                             LocalStorageService.setItemAsync(StorageEnum.USER, response.data);
-                            loginSucces(dispatch);
-                            dispatch(loading(false));
+                            dispatch(loginLoading(false));
+                            NavigationService.navigate('Home'/*, { userName: 'Lucy' }*/);
+                        }else{
+                            DropDownAlertServices.alert(
+                                Constant.msgType.error,
+                                strings.LABEL.HATA,
+                                strings.MSG.KULLANICI_BULUNAMADI_HATA,
+                                Constant.MESSAGE_DURATION
+                              );                        
+                            dispatch(loginLoading(false));
                         }
                     }, err => {
-                        alertMessage('Mesaj', 'Kullanıcı bulunamadı.');
+                        DropDownAlertServices.alert(
+                            Constant.msgType.error,
+                            strings.LABEL.HATA,
+                            strings.MSG.HATA_OLUSTU,
+                            Constant.MESSAGE_DURATION
+                          );  
+                        dispatch(loginLoading(false));
                     });
 
                 }).catch(x => {
-                    //dispatch(showToast(x.response.data.error_description , 'error'));
-                    alertMessage('Mesaj', 'Kullanıcı adı veya şifre yanlış!');
-                    dispatch(loading(false));
+                    debugger;
+                    DropDownAlertServices.alert(
+                        Constant.msgType.error,
+                        strings.LABEL.HATA,
+                        strings.MSG.KULLANICI_BILGILERI_YALNIS,
+                        Constant.MESSAGE_DURATION
+                      );  
+                    dispatch(loginLoading(false));
                 });
         }
     }
 };
 
-const loginSucces = (dispatch/*, user*/) => {
-    dispatch({
-        type: LOGIN_SUCCES,
-        //payload:user
-    });
-    NavigationService.navigate('Home'/*, { userName: 'Lucy' }*/);
-};
 
-
-export const loading = bool => ({
-    type: LOADING,
-    payload: bool,
-});
-
-export const showToast = (message, messageType) => ({
-    type: SHOW_TOAST,
-    payload: { message, messageType },
-});
 
 

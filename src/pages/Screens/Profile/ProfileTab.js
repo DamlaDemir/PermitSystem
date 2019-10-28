@@ -8,69 +8,77 @@ import {
     Text,
     ListItem,
   } from "react-native-elements";
-import { saveProfile, setLastName, setName, setUserName, setPassword, setGsm1, setGsm2, setEmail, setAddress, setStartdate } from '../../../redux/actions';
+import { 
+    updateProfile, 
+    setLastName, 
+    setName, 
+    setUserName, 
+    setPassword, 
+    setGsm1, 
+    setGsm2, 
+    setEmail, 
+    setAddress, 
+    setStartdate,
+    getProfileInfo 
+} from '../../../redux/actions';
 import Colors from '../../../assets/colors/Colors';
 import CommonStyles from "../../../assets/styles/CommonStyles";
 import StorageEnum from '../../../common/Enums/StorageEnum';
-import { Button, CustomInput } from '../../../components';
+import { Button, CustomInput, Loading } from '../../../components';
 import UserImage from '../../../assets/images/user.png';
 import LocalStorageService from '../../../services/LocalStorageServices';
 import PermitSystemAPI from '../../../services/PermitSystemAPI';
+import styles from './styles';
+import NavigationService from '../../../navigation/NavigationServices';
+import DropdownAlert from "react-native-dropdownalert";
+import DropDownAlertServices from '../../../services/DropdownAlertServices';
 
 class ProfileTab extends Component {
-    static navigationOptions = {
-        title: 'PROFİL',
-        headerTitleStyle: { textAlign: 'center', alignSelf: 'center' },
-        headerRight: (<View></View>),
-        headerStyle: {
-            backgroundColor: 'white'
-            //flex: 1
-        },
-        headerTintColor: '#6B7A8F',
-        headerTitleStyle: {
-            alignSelf: 'center',
-            textAlign: "center",
-            justifyContent: 'center',
-            fontWeight: 'bold',
-            textAlignVertical: 'center',
-        },
+    static navigationOptions  = () => {
+        return {
+            title: 'PROFİL',
+            headerTitleStyle: { textAlign: 'center', alignSelf: 'center' },
+            headerRight: (<View>
+                <Button
+                buttonStyle={styles.signOutButton}
+                text="Çıkış Yap"
+                onPress = {() =>  NavigationService.navigate('Login')}  />
+                </View>),
+        }
+       
+        // headerStyle: {
+        //     backgroundColor: 'white'
+        //     //flex: 1
+        // },
+        // headerTintColor: '#6B7A8F',
+        // headerTitleStyle: {
+        //     alignSelf: 'center',
+        //     textAlign: "center",
+        //     justifyContent: 'center',
+        //     fontWeight: 'bold',
+        //     textAlignVertical: 'center',
+        // },
     };//Steack navigator özelliğinden gelen sayfadaki headerın özellikleri
 
     saveProfile() {
-        const profileParameters = {
-            name: this.props.name,
-
-        }
-        this.props.saveProfile(profileParameters);
-    }
-
-    componentWillMount() {
-        LocalStorageService.getItemAsync(StorageEnum.USER).then(user => {
-            let ProfileRequest = { personelId: user.value.Id };
-            PermitSystemAPI.postValue("api/Values/GetProfile", ProfileRequest, response => {
-                debugger;
-                this.setProfileDatas(response.data);
-
-            }, err => {
-                //apide catch'e düşünce burdada catch'e düşer id gitmezse mesela apiye catch'e düşer
-            });
-        });
-    }
-
-    setProfileDatas(data) {       
-        this.props.setName("İsim: " + data.Firstname);
-        this.props.setLastName("Soyisim: " + data.Lastname);
-        this.props.setUserName("Kullanıcı Adı: " + data.Username);
-        this.props.setPassword(data.Password);
-        this.props.setGsm1("Gsm1: " + data.Phone);
-        if (data.gsm2 == null ) { this.props.setGsm2("Gsm2: " + ""); }
-        else{ this.props.setGsm2("Gsm2: " + data.Phone2); }
-        this.props.setEmail("Eposta: " + data.Email);
         debugger;
-        this.props.setAddress("Adress: " + data.Address);
-        this.props.setStartdate("İşe Başlama Tarihi: " + moment(data.Startdate).format('DD.MM.YYYY'));
+       let user = {
+        Firstname : this.props.name,
+        Lastname : this.props.lastname,
+        Username : this.props.username,
+        Password : this.props.password,
+        Phone : this.props.gsm1,
+        Phone2 : this.props.gsm2,
+        Email : this.props.email,
+        Address : this.props.address,
+        Startdate : this.props.startdate,
+       }
+        this.props.updateProfile(user);
     }
 
+    componentDidMount() {
+        this.props.getProfileInfo();
+    }
     render() {
         return (
             <KeyboardAvoidingView>
@@ -99,7 +107,7 @@ class ProfileTab extends Component {
                             placeholderTextColor="black"
                             underlineColorAndroid="transparent"
                             onChangeText={name => this.props.setName(name)}
-                            style = {[CommonStyles.textStyle]}
+                            style = {[CommonStyles.textStyle,{padding:0}]}
                         />              
                         }
                         leftIcon={{
@@ -123,7 +131,7 @@ class ProfileTab extends Component {
                             placeholderTextColor="black"
                             underlineColorAndroid="transparent"
                             onChangeText={lastname => this.props.setLastName(lastname)}
-                            style = {[CommonStyles.textStyle]}
+                            style = {[CommonStyles.textStyle,{padding:0}]}
                         />              
                         }
                         leftIcon={{
@@ -146,7 +154,7 @@ class ProfileTab extends Component {
                             placeholderTextColor="black"
                             underlineColorAndroid="transparent"
                             onChangeText={username => this.props.setUserName(username)}
-                            style = {[CommonStyles.textStyle]}
+                            style = {[CommonStyles.textStyle,{padding:0}]}
                         />              
                         }
                         leftIcon={{
@@ -171,7 +179,7 @@ class ProfileTab extends Component {
                             underlineColorAndroid="transparent"
                             secureTextEntry={true}
                             onChangeText={password => this.props.setPassword(password)}
-                            style = {[CommonStyles.textStyle]}
+                            style = {[CommonStyles.textStyle,{padding:0}]}
                         />              
                         }
                         leftIcon={{
@@ -195,7 +203,7 @@ class ProfileTab extends Component {
                             underlineColorAndroid="transparent"
                             keyboardType={'phone-pad'}
                             onChangeText={gsm1 => this.props.setGsm1(gsm1)}
-                            style = {[CommonStyles.textStyle]}
+                            style = {[CommonStyles.textStyle,{padding:0}]}
                         />              
                         }
                         leftIcon={{
@@ -219,7 +227,7 @@ class ProfileTab extends Component {
                             underlineColorAndroid="transparent"
                             keyboardType={'phone-pad'}
                             onChangeText={gsm2 => this.props.setGsm2(gsm2)}
-                            style = {[CommonStyles.textStyle]}
+                            style = {[CommonStyles.textStyle,{padding:0}]}
                         />              
                         }
                         leftIcon={{
@@ -243,7 +251,7 @@ class ProfileTab extends Component {
                             underlineColorAndroid="transparent"
                             keyboardType={'email-address'}
                             onChangeText={email => this.props.setEmail(email)}
-                            style = {[CommonStyles.textStyle]}
+                            style = {[CommonStyles.textStyle,{padding:0}]}
                         />              
                         }
                         leftIcon={{
@@ -266,7 +274,7 @@ class ProfileTab extends Component {
                             placeholderTextColor="black"
                             underlineColorAndroid="transparent"
                             onChangeText={address => this.props.setAddress(address)}
-                            style = {[CommonStyles.textStyle]}
+                            style = {[CommonStyles.textStyle,{padding:0}]}
                         />              
                         }
                         leftIcon={{
@@ -285,12 +293,12 @@ class ProfileTab extends Component {
                             returnKeyType={'done'}
                             autoCapitalize={'none'}
                             autoCorrect={true}
-                            value={this.props.startdate}
+                            value={moment(this.props.startdate).format('DD.MM.YYYY')}
                             placeholderTextColor="black"
                             underlineColorAndroid="transparent"
                             editable={false}
                             onChangeText={startdate => this.props.setStartdate(startdate)}
-                            style = {[CommonStyles.textStyle]}
+                            style = {[CommonStyles.textStyle,{padding:0}]}
                         />              
                         }
                         leftIcon={{
@@ -303,10 +311,9 @@ class ProfileTab extends Component {
                             <Button
                                 buttonStyle={[CommonStyles.buttonStyle, CommonStyles.alignmentStyle]}
                                 onPress={this.saveProfile.bind(this)}
-                                isLoading={this.props.isLoading}
                                 text="KAYDET" />
-
-
+                            <Loading loading={this.props.profileLoading} />
+                            <DropdownAlert ref={ref => DropDownAlertServices.setDropDownAlert(ref)} />   
                         </View>
                     </View>
                 </ScrollView>
@@ -316,7 +323,8 @@ class ProfileTab extends Component {
 }
 
 const mapStateToProps = ({ profileTabResponse }) => {
-    const { name,
+    const { 
+        name,
         lastname,
         username,
         password,
@@ -324,7 +332,8 @@ const mapStateToProps = ({ profileTabResponse }) => {
         gsm2,
         email,
         address,
-        startdate } = profileTabResponse;
+        startdate,
+        profileLoading } = profileTabResponse;
     return {
         name,
         lastname,
@@ -334,7 +343,22 @@ const mapStateToProps = ({ profileTabResponse }) => {
         gsm2,
         email,
         address,
-        startdate
+        startdate,
+        profileLoading
     };
 };
-export default connect(mapStateToProps, { setName, setLastName, saveProfile, setUserName, setPassword, setGsm1, setGsm2, setEmail, setAddress, setStartdate })(ProfileTab);
+
+const actionCreators = {
+    setName, 
+    setLastName, 
+    updateProfile, 
+    setUserName, 
+    setPassword, 
+    setGsm1, 
+    setGsm2, 
+    setEmail, 
+    setAddress, 
+    setStartdate,
+    getProfileInfo
+  }
+export default connect(mapStateToProps, actionCreators)(ProfileTab);

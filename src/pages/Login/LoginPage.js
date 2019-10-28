@@ -1,17 +1,22 @@
 import React,{Component} from 'react';
 import {KeyboardAvoidingView,Platform,View} from 'react-native';
 import { connect } from 'react-redux';
-import Toast, {DURATION} from 'react-native-easy-toast';
-import {Wallpaper,Logo,SignupSection,Button,CustomInput} from '../../components';
+import DropdownAlert from "react-native-dropdownalert";
+import DropDownAlertServices from '../../services/DropdownAlertServices';
+import {Wallpaper,Logo,SignupSection,Button,CustomInput,Loading} from '../../components';
 import {usernameChanged,passwordChanged,login} from '../../redux/actions';
 import UsernameImage from '../../assets/images/username.png';
 import PasswordImage from '../../assets/images/password.png';
 import Colors from '../../assets/colors/Colors'
 import CommonStyles from '../../assets/styles/CommonStyles'
 import styles from './styles';
+import BaseComponent from '../../common/Base';
 
- class LoginPage extends Component{
+ class LoginPage extends BaseComponent{
 
+  constructor(props) {
+    super(props);
+  }
   static navigationOptions = {
     header: null,
     };
@@ -77,9 +82,10 @@ import styles from './styles';
             <Button 
             buttonStyle={[styles.button,CommonStyles.alignmentStyle]} 
             onPress={this.Login.bind(this)} 
-            isLoading={this.props.loading}
             text="GİRİŞ"/>
             <View style={styles.container}></View>
+            <Loading loading={this.props.loginLoading} />
+            <DropdownAlert ref={ref => DropDownAlertServices.setDropDownAlert(ref)} />            
             {/* <Toast
                     ref="toast"
                     style={this.props.showToastMesType == 'error' ? Styles.showToastError : ""}
@@ -96,13 +102,16 @@ import styles from './styles';
     }
 }
   const mapStateToProps = ({loginResponse}) => {
-    const { username, password, loading, showToastMessage,showToastMesType  } = loginResponse;
+    const { username, password, loginLoading, showToastMessage,showToastMesType  } = loginResponse;
     return {
         username,
         password,
-        loading,
+        loginLoading,
         showToastMessage,
         showToastMesType
     };
 };
-  export default connect(mapStateToProps, {usernameChanged,passwordChanged,login})(LoginPage);
+
+const actionCreators = {usernameChanged,passwordChanged,login};
+
+export default connect(mapStateToProps,actionCreators)(LoginPage);

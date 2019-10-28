@@ -5,18 +5,16 @@ import Colors from '../../assets/colors/Colors';
 import Styles from '../../assets/styles/CommonStyles';
 
 class PickerSelect extends React.Component {
+  constructor(props) {
+    super(props);
+    this.renderHeader = this.renderHeader.bind(this);
+  }
 
   render() {
-    const options = [
-      {
-        label: 'Yıllık İzin',
-        value: 1
-      },
-    ]
     return (
         <CustomPicker
           placeholder={this.props.placeholder}
-          options={options}
+          options={this.props.options}
           getLabel={item => item.label}
           fieldTemplate={this.renderField}
           optionTemplate={this.renderOption}
@@ -30,7 +28,7 @@ class PickerSelect extends React.Component {
   renderHeader() {
     return (
       <View style={styles.headerFooterContainer}>
-        <Text style={Styles.textStyle}>İzin Türleri</Text>
+        <Text style={Styles.textStyle}>{this.props.HeaderText}</Text>
       </View>
     )
   }

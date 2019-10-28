@@ -13,7 +13,8 @@ class CustomDatePicker extends Component {
 
   renderText(){
     if(this.props.isSelected){
-      datetime = moment(this.props.datetime).format('DD.MM.YYYY HH:mm');
+      datetime = this.props.mode == 'datetime' ? moment(this.props.datetime).format('DD.MM.YYYY HH:mm') : 
+      moment(this.props.datetime).format('DD.MM.YYYY') ;
       return (<Text style={CommonStyles.textStyle}>{datetime}</Text>)
     }
     else
@@ -30,7 +31,7 @@ class CustomDatePicker extends Component {
           isVisible={this.props.isVisible}
           onConfirm={this.props.onConfirm}
           onCancel={this.props.onCancel}
-          mode='datetime'
+          mode={this.props.mode}
         />
       </View>
     );

@@ -18,15 +18,25 @@ export const SET_GSM2 = 'set_gsm2';
 export const SET_EMAIL = 'set_email';
 export const SET_ADDRESS = 'set_address';
 export const SET_STARTDATE = 'set_startadress';
-export const SAVE_PROFILE_CLICK='save_profile_click';
 export const GET_TOKEN='get_token';
 export const SAVE_TOKEN='save_token';
 export const REMOVE_TOKEN='remove_token';
-export const LOADING='loading';
+export const LOGIN_LOADING='login_loading';
 export const ERROR='error';
-export const SHOW_TOAST='showToast';
 export const ADDPERMIT_LOADING='addPermitLoading';
 export const LOAD_PERMIT_LIST='loadPermitList';
+export const FILL_PERMIT_LIST='fillPermitList';
+export const SELECT_PERSONEL_PICKER_CHECKED='selectPersonelPickerChecked';
+export const FILTER_LOADING='filterLoading';
+export const FILL_PERSONEL_LIST='fillPersonelList';
+export const PROFILE_LOADING='profileLoading';
+
+
+
+
+
+
+
 
 
 

@@ -1,6 +1,17 @@
-import { DATETIME_CLICK, DATETIME_CANCEL, DATETIME_SET, SELECT_PICKER_CHECKED, SET_EXPLANATION,ADDPERMIT_LOADING,LOAD_PERMIT_LIST } from './types';
+import { 
+    DATETIME_CLICK, 
+    DATETIME_CANCEL, 
+    DATETIME_SET, 
+    SELECT_PICKER_CHECKED, 
+    SET_EXPLANATION,
+    ADDPERMIT_LOADING,
+    LOAD_PERMIT_LIST,
+ } from './types';
 import PermitSystemAPI from '../../services/PermitSystemAPI';
+import LocalStorageService from '../../services/LocalStorageServices';
 import Base from '../../common/Base/index';
+import StorageEnum from '../../common/Enums/StorageEnum';
+import PermitTypeEnum from '../../common/Enums/PermitTypeEnum';
 
 export const clickDatetimePicker = ({ stateName, selectedDtp }) => {
     console.log("clickdatetimepicker");
@@ -34,13 +45,12 @@ export const setDateTime = ({ stateName, datetime, isSelected, selectedDtp }) =>
     }
 }
 
-export const selectPickerChecked = (permitType) => {
+export const selectPickerChecked = (pickerValue) => {
     return (dispatch) => {
         dispatch({
             type: SELECT_PICKER_CHECKED,
-            payload: permitType
+            payload: pickerValue
         });
-
     }
 }
 
@@ -54,6 +64,16 @@ export const setExplanation = (explanation) => {
     }
 }
 
+export const AddPermitLoading = bool => ({
+    type: ADDPERMIT_LOADING,
+    payload: bool,
+});
+
+export const LoadPermitList = bool => ({
+    type: LOAD_PERMIT_LIST,
+    payload: bool,
+});
+
 export const takePermit = (permitParameters) => {
     return (dispatch) => {
         dispatch(LoadPermitList(false));
@@ -66,7 +86,7 @@ export const takePermit = (permitParameters) => {
                 //izin talebi başarıyla gönderildi
                 dispatch(AddPermitLoading(false));
                 Base.AlertMessage('Mesaj', 'İzin talebi başarıyla gönderildi.');
-                dispatch(LoadPermitList(true));
+                dispatch(LoadPermitList(true)); //liste sayfasının yenilenmesi için
 
             }, err => {
                 //apide catch'e düşünce burdada catch'e düşer id gitmezse mesela apiye catch'e düşer
@@ -75,13 +95,3 @@ export const takePermit = (permitParameters) => {
         }
     }
 }
-
-export const AddPermitLoading = bool => ({
-    type: ADDPERMIT_LOADING,
-    payload: bool,
-});
-
-export const LoadPermitList = bool => ({
-    type: LOAD_PERMIT_LIST,
-    payload: bool,
-});

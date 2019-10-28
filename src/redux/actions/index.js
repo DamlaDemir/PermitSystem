@@ -1,3 +1,5 @@
 export * from './loginActions';
 export * from './addTabActions';
-export * from './profileTabActons';
+export * from './profileTabActions';
+export * from './listTabActions';
+

@@ -29,11 +29,12 @@ export default StyleSheet.create({
         height: 40,
         width: DEVICE_WIDTH - 40,
         backgroundColor: Colors.blueberry,
-        margin: 30
+        margin: 20
      },
      listContainerStyle: {
-        borderBottomWidth: 1.25,
-        margin:8,
+        // borderBottomWidth: 1.25,
+        borderWidth: 1.25,
+        margin:5,
         padding:5,
      },     
     reject: {

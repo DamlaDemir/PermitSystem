@@ -1,4 +1,15 @@
-import { SET_NAME, SET_LASTNAME, SET_USERNAME, SET_PASSWORD, SET_GSM1, SET_GSM2, SET_EMAIL, SET_ADDRESS,SET_STARTDATE, SAVE_PROFILE_CLICK } from '../actions/types';
+import { 
+    SET_NAME, 
+    SET_LASTNAME, 
+    SET_USERNAME, 
+    SET_PASSWORD, 
+    SET_GSM1, 
+    SET_GSM2, 
+    SET_EMAIL, 
+    SET_ADDRESS,
+    SET_STARTDATE, 
+    PROFILE_LOADING
+ } from '../actions/types';
 
 const INITIAL_STATE = {
     name: '',
@@ -9,12 +20,11 @@ const INITIAL_STATE = {
     gsm2: '',
     email: '',
     address: '',
-    startdate: ''
+    startdate: '',
+    profileLoading : false
 }
 
-
 export default (state = INITIAL_STATE, action) => {
-    debugger;
     switch (action.type) {
         case SET_NAME:
             return { ...state, name: action.payload }
@@ -43,9 +53,8 @@ export default (state = INITIAL_STATE, action) => {
         case SET_STARTDATE:
             return { ...state, startdate: action.payload }
 
-        case SAVE_PROFILE_CLICK:
-            return { ...state, isLoading: true }
-
+        case PROFILE_LOADING:
+                return { ...state, profileLoading: action.payload }
         default:
             return state;
     }

@@ -20,6 +20,12 @@ import PermitStatusEnum from '../../../common/Enums/PermitStatusEnum';
 import dateImg from '../../../assets/images/datetime.png';
 import SelectImage from '../../../assets/images/check.png';
 
+const options = [
+  {
+    label: 'Onaylandı',
+    value: 1
+  }
+]
 
 class AddTab extends Component {
 
@@ -90,6 +96,7 @@ class AddTab extends Component {
                 onCancel={() => this._hideDateTimePicker('isDtpVisibleStartTime')}
                 isSelected={this.props.isSelectedStartTime}
                 datetime={this.props.startTime}
+                mode = "datetime"
               />
               }
               leftIcon={        
@@ -107,6 +114,7 @@ class AddTab extends Component {
                 onCancel={() => this._hideDateTimePicker('isDtpVisibleEndTime')}
                 isSelected={this.props.isSelectedEndTime}
                 datetime={this.props.endTime}
+                mode = "datetime"
               />
               }
               leftIcon={        
@@ -115,10 +123,11 @@ class AddTab extends Component {
             />
               <ListItem
               containerStyle={CommonStyles.listContainerStyle}
-              title={
-            
+              title={            
                 <PickerSelect 
                 placeholder={'İzin türünü seçiniz'}
+                options = {options}
+                HeaderText = "İzin Türleri"
                 onValueChange={value => {
                   this.props.selectPickerChecked(value.value);
                 }} />
@@ -142,7 +151,7 @@ class AddTab extends Component {
                 underlineColorAndroid="transparent"
                 multiline={true}
                 numberOfLines={1}
-                style = {[CommonStyles.textStyle,{paddingLeft:0}]}
+                style = {[CommonStyles.textStyle,{padding:0}]}
               />              
               }
               leftIcon={        
@@ -152,7 +161,6 @@ class AddTab extends Component {
             <Button
               buttonStyle={[CommonStyles.alignmentStyle, CommonStyles.buttonStyle]}
               onPress={this.takePermit.bind(this)}
-              isLoading={this.props.isLoading}
               text="İZİN AL" />
           </KeyboardAvoidingView>
         </Content>
@@ -172,7 +180,7 @@ const mapStateToProps = ({ addTabResponse }) => {
     stateName,
     permitType,
     explanation,
-    isLoading 
+    addPermitLoading 
   } = addTabResponse;
   return {
     isDtpVisibleEndTime,
@@ -184,7 +192,7 @@ const mapStateToProps = ({ addTabResponse }) => {
     endTime,
     permitType,
     explanation,
-    isLoading
+    addPermitLoading
 
   };
 };
