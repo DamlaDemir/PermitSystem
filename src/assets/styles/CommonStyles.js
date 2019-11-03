@@ -23,7 +23,8 @@ export default StyleSheet.create({
       },
     container: {
          flex:1,
-         backgroundColor:Colors.lightWhite
+         backgroundColor:Colors.lightWhite,
+         marginTop:10
      },
      buttonStyle: {
         height: 40,
@@ -49,7 +50,11 @@ export default StyleSheet.create({
     statusButton : {
         borderRadius: 20,
         width:80
+    },
+    mt10 : {
+        marginTop:10
     }
+
 
 });
 

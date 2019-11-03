@@ -1,21 +1,48 @@
 import { 
     FILL_PERMIT_LIST,
-    SELECT_PERSONEL_PICKER_CHECKED,
     FILTER_LOADING,
-    FILL_PERSONEL_LIST
+    FILL_PERSONEL_LIST,
+    FILTER_PERMIT_DATETIME_CLICK,
+    FILTER_PERMIT_DATETIME_CANCEL,
+    FILTER_PERMIT_DATETIME_SET,
+    FILTER_PERMIT_STATUS_PICKER_CHECKED,
+    FILTER_PERMIT_PERSONEL_PICKER_CHECKED
 } from '../actions/types';
 
 const INITIAL_STATE = {
     permitList : [],
-    personelId : '',
     filterLoading : false,
-    personnel: []
+    personnel: [],
+    filterPermit_isDtpVisibleStartTime: false,
+    filterPermit_isDtpVisibleEndTime: false,
+    filterPermit_isSelectedStartTime: false,
+    filterPermit_isSelectedEndTime: false,
+    filterPermit_stateName: '',
+    filterPermit_startTime: null,
+    filterPermit_endTime: null,
+    filterPermit_permitStatus: -1,
+    filterPermit_personelId: -1
 }
 
 export default (state=INITIAL_STATE, action) =>{
     switch(action.type) {    
-        case SELECT_PERSONEL_PICKER_CHECKED:
-            return { ...state, personelId: action.payload }
+        case FILTER_PERMIT_DATETIME_CLICK:
+            return { ...state, filterPermit_stateName: action.payload.stateName, [action.payload.selectedDtp]: true }
+            
+        case FILTER_PERMIT_DATETIME_CANCEL:
+            return { ...state, [action.payload]: false }
+
+        case FILTER_PERMIT_DATETIME_SET:
+            return {
+                ...state, [action.payload.stateName]: action.payload.datetime, [action.payload.isSelected]: true
+                , [action.payload.selectedDtp]: false
+            }
+
+        case FILTER_PERMIT_STATUS_PICKER_CHECKED:
+            return { ...state, filterPermit_permitStatus: action.payload }
+
+        case FILTER_PERMIT_PERSONEL_PICKER_CHECKED:
+            return { ...state, filterPermit_personelId: action.payload }
 
         case FILL_PERMIT_LIST:
             return { ...state, permitList: action.payload }

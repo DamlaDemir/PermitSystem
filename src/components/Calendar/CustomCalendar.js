@@ -24,11 +24,11 @@ LocaleConfig.defaultLocale = 'tr';
  class CustomCalendar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-        permitList: [],      
-        items: {},
-        marked : null
-    };
+    // this.state = {
+    //     permitList: [],      
+    //     items: {},
+    //     marked : null
+    // };
   }
   // getDateString(timestamp) {
   //   const date = new Date(timestamp)
@@ -58,7 +58,7 @@ LocaleConfig.defaultLocale = 'tr';
       <Agenda style = {styles.calendar}
         items={this.props.items}
         loadItemsForMonth={this.loadItems.bind(this)}
-        selected = {'2019-08-05'}
+        selected = {new Date()}
         renderItem={this.renderItem.bind(this)}
         renderEmptyDate={this.renderEmptyDate.bind(this)}
         rowHasChanged={this.rowHasChanged.bind(this)}
@@ -72,6 +72,7 @@ LocaleConfig.defaultLocale = 'tr';
   }
 
   loadItems(day) {
+    debugger;
     //bu döngünün amacı tarihlerin üstüne basınca altta kutucuk çıkarıp bilgi vermek
     //gelen day yukardan gelen selected date örneğin 2019-05-16
     //aşağıdaki döngü gelen date değerine göre o ayın başından başlıyor (2019-05-01)
@@ -117,7 +118,7 @@ LocaleConfig.defaultLocale = 'tr';
           <View><Text style={[Styles.textStyle,{ fontSize: 12 }]}>Bitiş Tarihi: {item.EndDate}</Text></View>
           <View><Text style={[Styles.textStyle,{ fontSize: 12 }]}>Açıklama: {item.Reason}</Text></View>
           <View><Text style={[Styles.textStyle,{ fontSize: 12 }]}>Durum:</Text>
-          <Text style={[Styles.textStyle, { borderRadius: 5, width: 120, fontSize: 14 }, item.Status == PermitStatusEnum.ONAYLANDI ? Styles.approval : item.Status == PermitStatusEnum.ONAYBEKLIYOR ? Styles.waitApproval : Styles.reject]}>
+          <Text style={[Styles.textStyle, { borderRadius: 5, width: 100, fontSize: 14 }, item.Status == PermitStatusEnum.ONAYLANDI ? Styles.approval : item.Status == PermitStatusEnum.ONAYBEKLIYOR ? Styles.waitApproval : Styles.reject]}>
             {item.Status == PermitStatusEnum.ONAYLANDI ? "Onaylandı" : item.Status == PermitStatusEnum.ONAYBEKLIYOR ? "Onay Bekliyor" : "Onaylanmadı"}
           </Text>
           </View>

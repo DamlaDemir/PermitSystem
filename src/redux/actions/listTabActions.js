@@ -1,8 +1,8 @@
 import { 
     FILL_PERMIT_LIST,
-    SELECT_PERSONEL_PICKER_CHECKED,
     FILTER_LOADING,
-    FILL_PERSONEL_LIST
+    FILL_PERSONEL_LIST,
+    LOAD_PERMIT_LIST
  } from './types';
 import PermitSystemAPI from '../../services/PermitSystemAPI';
 import LocalStorageService from '../../services/LocalStorageServices';
@@ -10,18 +10,11 @@ import DropDownAlertServices from '../../services/DropdownAlertServices';
 import Base from '../../common/Base/index';
 import StorageEnum from '../../common/Enums/StorageEnum';
 import PermitTypeEnum from '../../common/Enums/PermitTypeEnum';
-import NavigationService from '../../navigation/NavigationServices';
+import NavigationService from '../../services/NavigationServices';
 import Constant from '../../common/constant';
 import strings from '../../assets/strings/strings';
-
-export const selectPersonelPickerChecked = (pickerValue) => {
-    return (dispatch) => {
-        dispatch({
-            type: SELECT_PERSONEL_PICKER_CHECKED,
-            payload: pickerValue
-        });
-    }
-}
+import {loadPermitList} from '../actions';
+import moment from 'moment';
 
 export const fillPermitList = (permitList) => ({
     type: FILL_PERMIT_LIST,
@@ -38,11 +31,14 @@ export const filterLoading = bool => ({
     payload: bool,
 });
 
+
+
 export const getPersonelList = () => {
     return (dispatch) => {
         LocalStorageService.getItemAsync(StorageEnum.USER).then(user => {
             if (user.value.IsAdmin) {             
                 var objList = [];
+                objList.push({ label:"Personel Seçiniz", value:-1 })
                 PermitSystemAPI.getValue("api/Values/GetUsers", response => {
                 response.data.forEach(item => {
                    var obj = {
@@ -70,6 +66,7 @@ export const getPersonelList = () => {
 export const getPermitList = (permitRequest) => {
     return (dispatch) => {
         if(filterValidation(permitRequest)){
+            dispatch(loadPermitList(false));
             dispatch(filterLoading(true));
             LocalStorageService.getItemAsync(StorageEnum.USER).then(user => {
                 if (!user.value.IsAdmin) {
@@ -80,7 +77,7 @@ export const getPermitList = (permitRequest) => {
                     var list = setDataArray(response,user);
                     dispatch(fillPermitList(list)); 
                     dispatch(filterLoading(false));
-                    // NavigationService.navigate('Damla');
+                    // NavigationService.navigate('ListTab');
                 }, err => {
                     dispatch(filterLoading(false));
                     DropDownAlertServices.alert(
@@ -98,18 +95,17 @@ export const getPermitList = (permitRequest) => {
  const setDataArray = (response,user) =>{
     var permitList = [];
     response.data.forEach(permit => {
-        var permitType = permit.PermitType;
-        var permitObj = {};
-        permitObj.title = user.value.IsAdmin ? permit.PersonelFirstName + " " + permit.PersonelLastName :
-         permitType  == PermitTypeEnum.YILLIK ? "YILLIK İZİN" : "DOĞUM İZNİ";
-        permitObj.content = {
+        var permitObj = {
+            Title: user.value.IsAdmin ? permit.PersonelFirstName + " " + permit.PersonelLastName : 
+            moment(permit.StartDate).format('DD.MM.YYYY') + "-" + moment(permit.EndDate).format('DD.MM.YYYY'),
             PermitNo: permit.PermitNo,
-            PermitType: permitType,
+            PermitType: permit.PermitType,
             StartDate: permit.StartDate,
             EndDate: permit.EndDate,
             Reason: permit.Reason,
-            ReqeuestDate: permit.ReqeuestDate,
-            Status: permit.Status
+            RequestDate: permit.RequestDate,
+            Status: permit.Status,
+            PersonnelNo : permit.Personnel_sno
         };
         permitList.push(permitObj);
     });
@@ -117,7 +113,7 @@ export const getPermitList = (permitRequest) => {
 }
 
 const filterValidation = (permitRequest) => {
-    if(permitRequest.EndDate == null && permitRequest.StartDate == null && permitRequest.PermitStatus == "" && permitRequest.UserId == ""){
+    if(permitRequest.EndDate === null && permitRequest.StartDate === null && permitRequest.PermitStatus === -1 && permitRequest.UserId === -1){
         DropDownAlertServices.alert(
             Constant.msgType.warning,
             strings.LABEL.UYARI,

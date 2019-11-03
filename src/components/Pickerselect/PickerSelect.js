@@ -19,6 +19,7 @@ class PickerSelect extends React.Component {
           fieldTemplate={this.renderField}
           optionTemplate={this.renderOption}
           headerTemplate={this.renderHeader}
+          value = {this.props.value}
           //footerTemplate={this.renderFooter}
           onValueChange={this.props.onValueChange}
         />

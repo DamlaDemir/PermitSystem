@@ -1,6 +1,6 @@
 
 import { USERNAME_CHANGED, PASSWORD_CHANGED, LOGIN_SUCCES, LOGIN_LOADING } from './types';
-import NavigationService from '../../navigation/NavigationServices';
+import NavigationService from '../../services/NavigationServices';
 import DropDownAlertServices from '../../services/DropdownAlertServices';
 import PermitSystemAPI from '../../services/PermitSystemAPI';
 import LocalStorageService from '../../services/LocalStorageServices';
@@ -33,15 +33,7 @@ export const loginLoading = bool => ({
 export const login = (data) => {
     return (dispatch) => {
 
-        if (data.Username === '' || data.Password === '') {
-            DropDownAlertServices.alert(
-                Constant.msgType.warning,
-                strings.LABEL.UYARI,
-                strings.MSG.ALANLAR_BOS_GECILEMEZ,
-                Constant.MESSAGE_DURATION
-              );  
-        }
-        else {
+        if (loginValidation(data)) {
             dispatch(loginLoading(true));
             PermitSystemAPI.getToken(data)
                 .then(x => {
@@ -76,7 +68,6 @@ export const login = (data) => {
                     });
 
                 }).catch(x => {
-                    debugger;
                     DropDownAlertServices.alert(
                         Constant.msgType.error,
                         strings.LABEL.HATA,
@@ -88,6 +79,20 @@ export const login = (data) => {
         }
     }
 };
+
+const loginValidation = (data) => {
+    const {Username, Password} = data;
+    if (Username === '' || Password === '') {
+        DropDownAlertServices.alert(
+            Constant.msgType.warning,
+            strings.LABEL.UYARI,
+            strings.MSG.ALANLAR_BOS_GECILEMEZ,
+            Constant.MESSAGE_DURATION
+          );  
+          return false;
+    }
+    return true;
+}
 
 
 

@@ -18,7 +18,6 @@ class AuthLoading extends BaseComponent {
   }
 
   authPage = async () => {
-    debugger;
     let r = await LocalStorageService.getItemAsync(StorageEnum.TOKEN);
     this.props.navigation.navigate(!r.hasError && r.value != "" && r.value != null ? 'App' : 'Auth');
   };

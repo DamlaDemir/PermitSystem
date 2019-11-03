@@ -20,7 +20,8 @@ var strings = {
         HATA_OLUSTU : "Bir hata oluştu.",
         ALANLAR_BOS_GECILEMEZ : "Lütfen alanları doldurunuz.",
         EN_AZ_BIR_ALAN_SECINIZ : "Lütfen filtreleme yapmak için en az 1 alan seçiniz.",
-        GUNCELLEME_BASARILI : "Güncelleme işlemi başarıyla tammlandı."
+        GUNCELLEME_BASARILI : "Güncelleme işlemi başarıyla tammlandı.",
+        IZIN_TALEBI_BASARILI : "İzin talebi başarıyla gönderildi."
 
   
     },

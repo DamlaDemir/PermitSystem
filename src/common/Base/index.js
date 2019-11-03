@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Alert} from 'react-native';
-import NavigationService from '../../navigation/NavigationServices';
+import NavigationService from '../../services/NavigationServices';
 import LocalStorageService from '../../services/LocalStorageServices';
 import StorageEnum from '../../common/Enums/StorageEnum';
 

@@ -155,7 +155,6 @@ export const getProfileInfo = () => {
                dispatch(setEmail(response.data.Email));
                dispatch(setAddress(response.data.Address));
                dispatch(setStartdate(response.data.Startdate));        
-               debugger;  
                dispatch(profileLoading(false));    
             }, err => {
                 dispatch(profileLoading(false)); 

@@ -9,34 +9,37 @@ import {
   Text,
   ListItem,
 } from "react-native-elements";
-import { CustomDatePicker, Button, PickerSelect, CustomInput } from '../../../components';
-import { clickDatetimePicker, cancelDatetimePicker, setDateTime, selectPickerChecked, setExplanation, takePermit } from '../../../redux/actions';
+import DropdownAlert from "react-native-dropdownalert";
+import DropDownAlertServices from '../../../services/DropdownAlertServices';
+import { CustomDatePicker, Button, PickerSelect, CustomInput,Loading } from '../../../components';
+import { clickDatetimePicker, cancelDatetimePicker, setDateTime, selectPickerChecked, setExplanation, AddOrUpdatePermit } from '../../../redux/actions';
 import Colors from '../../../assets/colors/Colors';
 import Explain from '../../../assets/images/explain.png';
 import CommonStyles from '../../../assets/styles/CommonStyles';
 import LocalStorageService from '../../../services/LocalStorageServices';
 import StorageEnum from '../../../common/Enums/StorageEnum';
 import PermitStatusEnum from '../../../common/Enums/PermitStatusEnum';
+import PermitTypeEnum from '../../../common/Enums/PermitTypeEnum';
 import dateImg from '../../../assets/images/datetime.png';
 import SelectImage from '../../../assets/images/check.png';
+import { 
+  ADD_PERMIT_DATETIME_CLICK, 
+  ADD_PERMIT_DATETIME_CANCEL, 
+  ADD_PERMIT_DATETIME_SET, 
+  ADD_PERMIT_TYPE_PICKER_CHECKED, 
+} from '../../../redux/actions/types';
 
 const options = [
-  {
-    label: 'Onaylandı',
-    value: 1
-  }
+  { label: 'Yıllık İzin', value: 1 },
+  { label: 'Doğum İzni', value: 2 }
 ]
-
 class AddTab extends Component {
 
   constructor(props) {
     super(props);
-    this._showDateTimePicker = this._showDateTimePicker.bind(this);
-    this._hideDateTimePicker = this._hideDateTimePicker.bind(this);
-    this._handleDatePicked = this._handleDatePicked.bind(this);
   }
   static navigationOptions = {
-    title: 'İzin Ekleme Sayfası',
+    title: 'İzin İşlemleri',
     headerRight: (<View ></View>),
     headerStyle: {
       backgroundColor: Colors.lightWhite,
@@ -49,32 +52,37 @@ class AddTab extends Component {
 
   //datetime picker için
   _showDateTimePicker(stateName, selectedDtp) {
-    this.props.clickDatetimePicker({ stateName, selectedDtp });
+    this.props.clickDatetimePicker(ADD_PERMIT_DATETIME_CLICK,stateName, selectedDtp );
     console.log(this.props.stateName);
   };
 
   _hideDateTimePicker(selectedDtp) {
-    this.props.cancelDatetimePicker(selectedDtp);
+    this.props.cancelDatetimePicker(ADD_PERMIT_DATETIME_CANCEL,selectedDtp);
   }
 
   _handleDatePicked(datetime, isSelected, selectedDtp) {
-    this.props.setDateTime({ stateName: this.props.stateName, datetime: datetime, isSelected: isSelected, selectedDtp: selectedDtp });
+    // Sayfada 2 tane datetime picker olduğu için her iki datetşme için reducerda tip tanımlayıp aynı işlemleri yapmamak için parametrik yapıldı.
+    // 2. parametre baslangıç veya bitiş tarihinin tutulacağı state ad(2 si için farklı değişken var hangisi dolsun bunu belirliyoruz)
+    //isSelected parametresi başlangıç veya bitiş hangisini seçmişiz hangisine veri dolacak bunu belirler.
+    // selected dtp başlangıç yada bitiş hangisi seçildiyse saat seçme işlemi bittikten sonra visible özelliğini false yapmak için
+    this.props.setDateTime( ADD_PERMIT_DATETIME_SET,this.props.addPermit_stateName, datetime.date,  isSelected, selectedDtp );
 
   };
   //datetime picker için
 
-  takePermit() {
+  AddOrUpdatePermit() {
     LocalStorageService.getItemAsync(StorageEnum.USER).then(user => {
       const permitParameters = {
-        StartDate: this.props.startTime,
-        EndDate: this.props.endTime,
-        AnnualType_sno: this.props.permitType,
+        sno : this.props.pertmitNo,
+        StartDate: this.props.addPermit_startTime,
+        EndDate: this.props.addPermit_endTime,
+        AnnualType_sno: this.props.addPermit_permitType.value,
         Reason: this.props.explanation,
         Personnel_sno: user.value.Id,
-        Status: PermitStatusEnum.ONAYBEKLIYOR,
-        RequestDate : new Date()
+        Status: this.props.addPermit_permitStatus,
+        RequestDate : this.props.requestDate
       }
-      this.props.takePermit(permitParameters);
+      this.props.AddOrUpdatePermit(permitParameters);
     });
   }
 
@@ -90,12 +98,12 @@ class AddTab extends Component {
               title={
                 <CustomDatePicker
                 text="Başlangıç tarihini seçiniz"
-                onPress={() => this._showDateTimePicker('startTime', 'isDtpVisibleStartTime')}
-                isVisible={this.props.isDtpVisibleStartTime}
-                onConfirm={date => this._handleDatePicked({ date }, 'isSelectedStartTime', 'isDtpVisibleStartTime')}
-                onCancel={() => this._hideDateTimePicker('isDtpVisibleStartTime')}
-                isSelected={this.props.isSelectedStartTime}
-                datetime={this.props.startTime}
+                onPress={() => this._showDateTimePicker('addPermit_startTime', 'addPermit_isDtpVisibleStartTime')}
+                isVisible={this.props.addPermit_isDtpVisibleStartTime}
+                onConfirm={date => this._handleDatePicked({ date }, 'addPermit_isSelectedStartTime', 'addPermit_isDtpVisibleStartTime')}
+                onCancel={() => this._hideDateTimePicker('addPermit_isDtpVisibleStartTime')}
+                isSelected={this.props.addPermit_isSelectedStartTime}
+                datetime={this.props.addPermit_startTime}
                 mode = "datetime"
               />
               }
@@ -108,12 +116,12 @@ class AddTab extends Component {
               title={           
                 <CustomDatePicker
                 text="Bitiş tarihini seçiniz"
-                onPress={() => this._showDateTimePicker('endTime', 'isDtpVisibleEndTime')}
-                isVisible={this.props.isDtpVisibleEndTime}
-                onConfirm={date => this._handleDatePicked({ date }, 'isSelectedEndTime', 'isDtpVisibleEndTime')}
-                onCancel={() => this._hideDateTimePicker('isDtpVisibleEndTime')}
-                isSelected={this.props.isSelectedEndTime}
-                datetime={this.props.endTime}
+                onPress={() => this._showDateTimePicker('addPermit_endTime', 'addPermit_isDtpVisibleEndTime')}
+                isVisible={this.props.addPermit_isDtpVisibleEndTime}
+                onConfirm={date => this._handleDatePicked({ date }, 'addPermit_isSelectedEndTime', 'addPermit_isDtpVisibleEndTime')}
+                onCancel={() => this._hideDateTimePicker('addPermit_isDtpVisibleEndTime')}
+                isSelected={this.props.addPermit_isSelectedEndTime}
+                datetime={this.props.addPermit_endTime}
                 mode = "datetime"
               />
               }
@@ -128,9 +136,11 @@ class AddTab extends Component {
                 placeholder={'İzin türünü seçiniz'}
                 options = {options}
                 HeaderText = "İzin Türleri"
-                onValueChange={value => {
-                  this.props.selectPickerChecked(value.value);
-                }} />
+                onValueChange = {val => {
+                  let permitType = { value: val.value, label: val.value == PermitTypeEnum.YILLIK ? "Yıllık İzin" : "Doğum İzni" }
+                  this.props.selectPickerChecked(ADD_PERMIT_TYPE_PICKER_CHECKED,permitType);
+                }}
+                value={this.props.addPermit_permitType} />
               }
               leftIcon={        
               <Image source={SelectImage} style={CommonStyles.inlineImg} />
@@ -160,8 +170,10 @@ class AddTab extends Component {
             />     
             <Button
               buttonStyle={[CommonStyles.alignmentStyle, CommonStyles.buttonStyle]}
-              onPress={this.takePermit.bind(this)}
-              text="İZİN AL" />
+              onPress={this.AddOrUpdatePermit.bind(this)}
+              text="KAYDET" />
+               <Loading loading={this.props.addPermitLoading} />
+              <DropdownAlert ref={ref => DropDownAlertServices.setDropDownAlert(ref)} />  
           </KeyboardAvoidingView>
         </Content>
       </Container>
@@ -171,30 +183,45 @@ class AddTab extends Component {
 
 const mapStateToProps = ({ addTabResponse }) => {
   const {
-    isDtpVisibleEndTime,
-    isDtpVisibleStartTime,
-    isSelectedStartTime,
-    isSelectedEndTime,
-    startTime,
-    endTime,
-    stateName,
-    permitType,
     explanation,
-    addPermitLoading 
+    addPermitLoading,
+    addPermit_isDtpVisibleStartTime,
+    addPermit_isDtpVisibleEndTime,
+    addPermit_isSelectedStartTime,
+    addPermit_isSelectedEndTime,
+    addPermit_stateName,
+    addPermit_startTime,
+    addPermit_endTime,
+    addPermit_permitType,
+    pertmitNo,
+    addPermit_permitStatus,
+    requestDate
   } = addTabResponse;
   return {
-    isDtpVisibleEndTime,
-    isDtpVisibleStartTime,
-    isSelectedStartTime,
-    isSelectedEndTime,
-    stateName,
-    startTime,
-    endTime,
-    permitType,
+    addPermit_isDtpVisibleEndTime,
+    addPermit_isDtpVisibleStartTime,
+    addPermit_isSelectedStartTime,
+    addPermit_isSelectedEndTime,
+    addPermit_stateName,
+    addPermit_startTime,
+    addPermit_endTime,
+    addPermit_permitType,
     explanation,
-    addPermitLoading
-
+    addPermitLoading,
+    pertmitNo,
+    addPermit_permitStatus,
+    requestDate
   };
 };
 
-export default connect(mapStateToProps, { clickDatetimePicker, cancelDatetimePicker, setDateTime, selectPickerChecked, setExplanation, takePermit })(AddTab);
+const actionCreators = {
+  clickDatetimePicker, 
+  cancelDatetimePicker, 
+  setDateTime, 
+  selectPickerChecked, 
+  setExplanation, 
+  AddOrUpdatePermit
+}
+
+export default connect(mapStateToProps, actionCreators)(AddTab);
+

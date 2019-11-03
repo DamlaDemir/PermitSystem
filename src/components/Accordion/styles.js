@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: "#F8FAFF",
         borderBottomWidth: 1,
-        paddingLeft: 7
+        paddingLeft: 7,
+        paddingRight:15
       },
       headerTextStyle: {
         flex: 3,
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
         fontFamily: "Montserrat-Light",
         color: 'black',
         justifyContent: 'center',
-        fontSize : 12
+        fontSize : 14
       },
       contentLeftView: {
         flex: 0.5,

@@ -19,7 +19,6 @@ import {
     selectPickerChecked, 
     takePermit,
     getPermitList,
-    selectPersonelPickerChecked,
     getPersonelList
  } from '../../../redux/actions';
 import BaseComponent from '../../../common/Base';
@@ -27,20 +26,19 @@ import dateImg from '../../../assets/images/datetime.png';
 import CommonStyles from '../../../assets/styles/CommonStyles';
 import SelectImage from '../../../assets/images/check.png';
 import UserImage from '../../../assets/images/User-icon.png';
+import { 
+  FILTER_PERMIT_DATETIME_CLICK, 
+  FILTER_PERMIT_DATETIME_CANCEL, 
+  FILTER_PERMIT_DATETIME_SET, 
+  FILTER_PERMIT_STATUS_PICKER_CHECKED, 
+  FILTER_PERMIT_PERSONEL_PICKER_CHECKED
+} from '../../../redux/actions/types';
 
 const options = [
-    {
-      label: 'Onaylanmadı',
-      value: 0
-    },
-    {
-      label: 'Onaylandı',
-      value: 1
-    },
-    {
-      label: 'Onay Bekleniyor',
-      value: 2
-    },
+    { label: 'İzin Durumu Seçiniz', value: -1 },
+    { label: 'Onaylanmadı', value: 0 },
+    { label: 'Onaylandı', value: 1 },
+    { label: 'Onay Bekleniyor', value: 2 },
   ]
 
 class FilterTab extends BaseComponent {
@@ -56,30 +54,29 @@ class FilterTab extends BaseComponent {
     this.props.getPersonelList();
   }
 
-  
    //datetime picker için
    _showDateTimePicker(stateName, selectedDtp) {
-    this.props.clickDatetimePicker({ stateName, selectedDtp });
-    console.log(this.props.stateName);
+    this.props.clickDatetimePicker( FILTER_PERMIT_DATETIME_CLICK,stateName, selectedDtp );
+    console.log(this.props.filterPermit_stateName);
     };
 
   _hideDateTimePicker(selectedDtp) {
-    this.props.cancelDatetimePicker(selectedDtp);
+    this.props.cancelDatetimePicker(FILTER_PERMIT_DATETIME_CANCEL,selectedDtp);
     }
 
   _handleDatePicked(datetime, isSelected, selectedDtp) {
-    this.props.setDateTime({ stateName: this.props.stateName, datetime: datetime, isSelected: isSelected, selectedDtp: selectedDtp });
+    this.props.setDateTime(FILTER_PERMIT_DATETIME_SET, this.props.filterPermit_stateName, datetime.date, isSelected,selectedDtp );
     };
   //datetime picker için
 
   getPermitListByFilter() {
-    debugger;
     var permitRequest = {};
-    permitRequest.StartDate = this.props.startTime;
-    permitRequest.EndDate = this.props.endTime;
-    permitRequest.PermitStatus = this.props.pickerValue;
-    permitRequest.UserId = this.props.personelId;
+    permitRequest.StartDate = this.props.filterPermit_startTime;
+    permitRequest.EndDate = this.props.filterPermit_endTime;
+    permitRequest.PermitStatus = this.props.filterPermit_permitStatus;
+    permitRequest.UserId = this.props.filterPermit_personelId;
     this.props.getPermitList(permitRequest);
+    this.props.navigation.navigate("ListTab");
   }
 
   renderAuth(){
@@ -93,7 +90,7 @@ class FilterTab extends BaseComponent {
                   options = {this.props.personnel}
                   HeaderText = "Personeller"
                   onValueChange={value => {
-                    this.props.selectPersonelPickerChecked(value.value);
+                    this.props.selectPickerChecked(FILTER_PERMIT_PERSONEL_PICKER_CHECKED,value.value);
                   }} />
                 }
                 leftIcon={        
@@ -105,7 +102,7 @@ class FilterTab extends BaseComponent {
   }
 
     render() {
-      if(this.props.permitList.length > 0 && this.props.loadPermitList){
+      if(this.props.permitList.length > 0 && this.props.loadPermitList){ //Yeni izin eklendiğinde listenin yenilenmesi için
         this.getPermitListByFilter();
       }
         return (
@@ -116,12 +113,12 @@ class FilterTab extends BaseComponent {
                 title={
                     <CustomDatePicker
                     text="Başlangıç tarihini seçiniz"
-                    onPress={() => this._showDateTimePicker('startTime', 'isDtpVisibleStartTime')}
-                    isVisible={this.props.isDtpVisibleStartTime}
-                    onConfirm={date => this._handleDatePicked({ date }, 'isSelectedStartTime', 'isDtpVisibleStartTime')}
-                    onCancel={() => this._hideDateTimePicker('isDtpVisibleStartTime')}
-                    isSelected={this.props.isSelectedStartTime}
-                    datetime={this.props.startTime}
+                    onPress={() => this._showDateTimePicker('filterPermit_startTime', 'filterPermit_isDtpVisibleStartTime')}
+                    isVisible={this.props.filterPermit_isDtpVisibleStartTime}
+                    onConfirm={date => this._handleDatePicked({ date }, 'filterPermit_isSelectedStartTime', 'filterPermit_isDtpVisibleStartTime')}
+                    onCancel={() => this._hideDateTimePicker('filterPermit_isDtpVisibleStartTime')}
+                    isSelected={this.props.filterPermit_isSelectedStartTime}
+                    datetime={this.props.filterPermit_startTime}
                     mode = "date"
                 />
                 }
@@ -134,12 +131,12 @@ class FilterTab extends BaseComponent {
               title={           
                 <CustomDatePicker
                 text="Bitiş tarihini seçiniz"
-                onPress={() => this._showDateTimePicker('endTime', 'isDtpVisibleEndTime')}
-                isVisible={this.props.isDtpVisibleEndTime}
-                onConfirm={date => this._handleDatePicked({ date }, 'isSelectedEndTime', 'isDtpVisibleEndTime')}
-                onCancel={() => this._hideDateTimePicker('isDtpVisibleEndTime')}
-                isSelected={this.props.isSelectedEndTime}
-                datetime={this.props.endTime}
+                onPress={() => this._showDateTimePicker('filterPermit_endTime', 'filterPermit_isDtpVisibleEndTime')}
+                isVisible={this.props.filterPermit_isDtpVisibleEndTime}
+                onConfirm={date => this._handleDatePicked({ date }, 'filterPermit_isSelectedEndTime', 'filterPermit_isDtpVisibleEndTime')}
+                onCancel={() => this._hideDateTimePicker('filterPermit_isDtpVisibleEndTime')}
+                isSelected={this.props.filterPermit_isSelectedEndTime}
+                datetime={this.props.filterPermit_endTime}
                 mode = "date"
               />
               }
@@ -155,7 +152,7 @@ class FilterTab extends BaseComponent {
                 options = {options}
                 HeaderText = "İzin Durumları"
                 onValueChange={valuePermitStatu => {
-                  this.props.selectPickerChecked(valuePermitStatu.value);
+                  this.props.selectPickerChecked(FILTER_PERMIT_STATUS_PICKER_CHECKED,valuePermitStatu.value);
                 }} />
               }
               leftIcon={        
@@ -175,33 +172,34 @@ class FilterTab extends BaseComponent {
     }
 }
 const mapStateToProps = ({ addTabResponse,listTabResponse }) => {
-    const {
-        isDtpVisibleEndTime,
-        isDtpVisibleStartTime,
-        isSelectedStartTime,
-        isSelectedEndTime,
-        startTime,
-        endTime,
-        stateName,      
-        isLoading,
-        loadPermitList,
-        pickerValue      
-      } = addTabResponse;
+    const {loadPermitList} = addTabResponse;
 
-      const {permitList,filterLoading,personnel,personelId} = listTabResponse;
-      return {
-        isDtpVisibleEndTime,
-        isDtpVisibleStartTime,
-        isSelectedStartTime,
-        isSelectedEndTime,
-        stateName,
-        startTime,
-        endTime,
-        isLoading,
+      const {
         permitList,
-        pickerValue,
+        filterLoading,
+        personnel,
+        filterPermit_isDtpVisibleStartTime,
+        filterPermit_isDtpVisibleEndTime,
+        filterPermit_isSelectedStartTime,
+        filterPermit_isSelectedEndTime,
+        filterPermit_stateName,
+        filterPermit_startTime,
+        filterPermit_endTime,
+        filterPermit_permitStatus,
+        filterPermit_personelId
+      } = listTabResponse;
+      return {
+        filterPermit_isDtpVisibleEndTime,
+        filterPermit_isDtpVisibleStartTime,
+        filterPermit_isSelectedStartTime,
+        filterPermit_isSelectedEndTime,
+        filterPermit_stateName,
+        filterPermit_startTime,
+        filterPermit_endTime,
+        permitList,
+        filterPermit_permitStatus,
         loadPermitList,
-        personelId ,
+        filterPermit_personelId ,
         filterLoading,
         personnel
       };
@@ -214,7 +212,6 @@ const mapStateToProps = ({ addTabResponse,listTabResponse }) => {
     selectPickerChecked, 
     takePermit,
     getPermitList,
-    selectPersonelPickerChecked,
     getPersonelList
   }
   export default connect(mapStateToProps,actionCreators)(FilterTab);

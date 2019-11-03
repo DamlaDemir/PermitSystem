@@ -1,43 +1,52 @@
 import { 
-    DATETIME_CLICK, 
-    DATETIME_CANCEL, 
-    DATETIME_SET, 
-    SELECT_PICKER_CHECKED, 
+    ADD_PERMIT_DATETIME_CLICK, 
+    ADD_PERMIT_DATETIME_CANCEL, 
+    ADD_PERMIT_DATETIME_SET, 
+    ADD_PERMIT_TYPE_PICKER_CHECKED, 
     SET_EXPLANATION, 
     ADDPERMIT_LOADING, 
     LOAD_PERMIT_LIST,
+    SET_PERMIT_NO,
+    SET_REQUEST_DATE,
+    ADD_PERMIT_SET_STATUS
 } from '../actions/types';
 
+import PermitStatusEnum from '../../common/Enums/PermitStatusEnum';
+
 const INITIAL_STATE = {
-    isDtpVisibleStartTime: false,
-    isDtpVisibleEndTime: false,
-    isSelectedStartTime: false,
-    isSelectedEndTime: false,
-    stateName: '',
-    startTime: null,
-    endTime: null,
-    pickerValue: '',
+    addPermit_isDtpVisibleStartTime: false,
+    addPermit_isDtpVisibleEndTime: false,
+    addPermit_isSelectedStartTime: false,
+    addPermit_isSelectedEndTime: false,
+    addPermit_stateName: '',
+    addPermit_startTime: null,
+    addPermit_endTime: null,
+    addPermit_permitType: -1,
+    addPermit_permitStatus: PermitStatusEnum.ONAYBEKLIYOR,
     explanation: '',
     addPermitLoading: false,
     loadPermitList: false,
+    pertmitNo: -1,
+    requestDate: new Date()
+
 }
 
 export default (state=INITIAL_STATE, action) =>{
     switch(action.type) {
-        case DATETIME_CLICK:
-            return { ...state, stateName: action.payload.stateName, [action.payload.selectedDtp]: true }
+        case ADD_PERMIT_DATETIME_CLICK:
+            return { ...state, addPermit_stateName: action.payload.stateName, [action.payload.selectedDtp]: true }
             
-        case DATETIME_CANCEL:
+        case ADD_PERMIT_DATETIME_CANCEL:
             return { ...state, [action.payload]: false }
 
-        case DATETIME_SET:
+        case ADD_PERMIT_DATETIME_SET:
             return {
-                ...state, [action.payload.stateName]: action.payload.datetime.date, [action.payload.isSelected]: true
+                ...state, [action.payload.stateName]: action.payload.datetime, [action.payload.isSelected]: true
                 , [action.payload.selectedDtp]: false
             }
 
-        case SELECT_PICKER_CHECKED:
-            return { ...state, pickerValue: action.payload }
+        case ADD_PERMIT_TYPE_PICKER_CHECKED:
+            return { ...state, addPermit_permitType: action.payload }
          
         case SET_EXPLANATION:
             return { ...state, explanation: action.payload }
@@ -47,7 +56,16 @@ export default (state=INITIAL_STATE, action) =>{
 
         case LOAD_PERMIT_LIST:
             return { ...state, loadPermitList: action.payload }
- 
+        
+        case SET_PERMIT_NO:
+            return { ...state, pertmitNo: action.payload }
+        
+        case SET_REQUEST_DATE:
+            return { ...state, requestDate: action.payload }
+                         
+        case ADD_PERMIT_SET_STATUS:
+            return { ...state, addPermit_permitStatus: action.payload }
+                                   
         default:
             return state;
     }

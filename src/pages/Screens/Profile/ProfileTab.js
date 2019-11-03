@@ -29,7 +29,7 @@ import UserImage from '../../../assets/images/user.png';
 import LocalStorageService from '../../../services/LocalStorageServices';
 import PermitSystemAPI from '../../../services/PermitSystemAPI';
 import styles from './styles';
-import NavigationService from '../../../navigation/NavigationServices';
+import NavigationService from '../../../services/NavigationServices';
 import DropdownAlert from "react-native-dropdownalert";
 import DropDownAlertServices from '../../../services/DropdownAlertServices';
 
@@ -61,7 +61,6 @@ class ProfileTab extends Component {
     };//Steack navigator özelliğinden gelen sayfadaki headerın özellikleri
 
     saveProfile() {
-        debugger;
        let user = {
         Firstname : this.props.name,
         Lastname : this.props.lastname,
@@ -76,7 +75,7 @@ class ProfileTab extends Component {
         this.props.updateProfile(user);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.props.getProfileInfo();
     }
     render() {

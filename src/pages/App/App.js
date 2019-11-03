@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';//provider'ın import edilmesi
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import reducers from '../../redux/reducers';
-import NavigationService from '../../navigation/NavigationServices';
+import NavigationService from '../../services/NavigationServices';
 import LoginPage from '../Login/LoginPage';
 import HomePage from '../Home/Home';
 import AuthLoading from '../AuthLoading/AuthLoading';
