@@ -7,6 +7,7 @@ import LocalStorageService from '../../services/LocalStorageServices';
 import StorageEnum from '../../common/Enums/StorageEnum';
 import Constant from '../../common/constant';
 import strings from '../../assets/strings/strings';
+import {pageLoading} from '../actions';
 
 export const usernameChanged = (username) => {
     return (dispatch) => {
@@ -25,16 +26,12 @@ export const passwordChanged = (password) => {
         });
     }
 };
-export const loginLoading = bool => ({
-    type: LOGIN_LOADING,
-    payload: bool,
-});
 
 export const login = (data) => {
     return (dispatch) => {
 
         if (loginValidation(data)) {
-            dispatch(loginLoading(true));
+            dispatch(pageLoading(LOGIN_LOADING,true));
             PermitSystemAPI.getToken(data)
                 .then(x => {
                     LocalStorageService.setItemAsync(
@@ -46,7 +43,7 @@ export const login = (data) => {
                     PermitSystemAPI.postValue("api/Values/GetUser", loginRequest, response => {
                         if (response.data.Username != null) {
                             LocalStorageService.setItemAsync(StorageEnum.USER, response.data);
-                            dispatch(loginLoading(false));
+                            dispatch(pageLoading(LOGIN_LOADING,false));
                             NavigationService.navigate('Home'/*, { userName: 'Lucy' }*/);
                         }else{
                             DropDownAlertServices.alert(
@@ -55,7 +52,7 @@ export const login = (data) => {
                                 strings.MSG.KULLANICI_BULUNAMADI_HATA,
                                 Constant.MESSAGE_DURATION
                               );                        
-                            dispatch(loginLoading(false));
+                              dispatch(pageLoading(LOGIN_LOADING,false));
                         }
                     }, err => {
                         DropDownAlertServices.alert(
@@ -64,7 +61,7 @@ export const login = (data) => {
                             strings.MSG.HATA_OLUSTU,
                             Constant.MESSAGE_DURATION
                           );  
-                        dispatch(loginLoading(false));
+                          dispatch(pageLoading(LOGIN_LOADING,false));
                     });
 
                 }).catch(x => {
@@ -74,7 +71,7 @@ export const login = (data) => {
                         strings.MSG.KULLANICI_BILGILERI_YALNIS,
                         Constant.MESSAGE_DURATION
                       );  
-                    dispatch(loginLoading(false));
+                      dispatch(pageLoading(LOGIN_LOADING,false));
                 });
         }
     }

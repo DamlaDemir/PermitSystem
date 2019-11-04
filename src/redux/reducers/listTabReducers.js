@@ -25,6 +25,7 @@ const INITIAL_STATE = {
 }
 
 export default (state=INITIAL_STATE, action) =>{
+    debugger;
     switch(action.type) {    
         case FILTER_PERMIT_DATETIME_CLICK:
             return { ...state, filterPermit_stateName: action.payload.stateName, [action.payload.selectedDtp]: true }

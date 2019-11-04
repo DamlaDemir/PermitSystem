@@ -1,7 +1,8 @@
 import { 
     CALENDAR_LOADING,
     FILL_CALENDAR_PERMIT_LIST,
-    FILL_CALENDAR_MARKED_LIST
+    FILL_CALENDAR_MARKED_LIST,
+    LOAD_CALENDAR_PERMIT_LIST
  } from './types';
 import PermitSystemAPI from '../../services/PermitSystemAPI';
 import LocalStorageService from '../../services/LocalStorageServices';
@@ -15,14 +16,9 @@ import strings from '../../assets/strings/strings';
 import moment from 'moment';
 import Colors from '../../assets/colors/Colors';
 import Styles from '../../assets/styles/CommonStyles';
-import {loadPermitList} from '../actions';
+import {loadPermitList,pageLoading} from '../actions';
 
 let permitDates = {};
-
-export const calendarLoading = bool => ({
-    type: CALENDAR_LOADING,
-    payload: bool,
-});
 
 export const fillCalendarPermitList = (permitList) => ({
     type: FILL_CALENDAR_PERMIT_LIST,
@@ -36,8 +32,8 @@ export const fillCalendarMarkedList = (markedList) => ({
 
 export const getUserPermitList = () => {
     return (dispatch) => {
-        dispatch(loadPermitList(false));
-        dispatch(calendarLoading(true));
+        dispatch(loadPermitList(LOAD_CALENDAR_PERMIT_LIST,false));
+        dispatch(pageLoading(CALENDAR_LOADING,true));
             LocalStorageService.getItemAsync(StorageEnum.USER).then(user => {
                 var permitRequest = {
                     UserId :user.value.Id,
@@ -59,10 +55,10 @@ export const getUserPermitList = () => {
                 
                 dispatch(fillCalendarPermitList(permitList));
                 dispatch(fillCalendarMarkedList(permitDates));
-                dispatch(calendarLoading(false));
+                dispatch(pageLoading(CALENDAR_LOADING,false));
            
                 }, err => {
-                    dispatch(calendarLoading(false));
+                    dispatch(pageLoading(CALENDAR_LOADING,false));
                     DropDownAlertServices.alert(
                         Constant.msgType.error,
                         strings.LABEL.HATA,

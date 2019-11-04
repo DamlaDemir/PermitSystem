@@ -40,6 +40,9 @@ export const ADD_PERMIT_SET_STATUS='addPermitSetStatus';
 export const CALENDAR_LOADING='calendarLoading';
 export const FILL_CALENDAR_PERMIT_LIST='fillCalendarPermitList';
 export const FILL_CALENDAR_MARKED_LIST='fillCalendarMarkedList';
+export const ADD_PERMIT_CLEAR_STATE='addPermitClearState';
+export const LOAD_CALENDAR_PERMIT_LIST='loadCalendarPermitList';
+
 
 
 

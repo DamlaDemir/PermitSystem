@@ -8,7 +8,9 @@ import {
     LOAD_PERMIT_LIST,
     SET_PERMIT_NO,
     SET_REQUEST_DATE,
-    ADD_PERMIT_SET_STATUS
+    ADD_PERMIT_SET_STATUS,
+    ADD_PERMIT_CLEAR_STATE,
+    LOAD_CALENDAR_PERMIT_LIST
 } from '../actions/types';
 
 import PermitStatusEnum from '../../common/Enums/PermitStatusEnum';
@@ -26,6 +28,7 @@ const INITIAL_STATE = {
     explanation: '',
     addPermitLoading: false,
     loadPermitList: false,
+    loadCalendarPermitList: false,
     pertmitNo: -1,
     requestDate: new Date()
 
@@ -57,6 +60,9 @@ export default (state=INITIAL_STATE, action) =>{
         case LOAD_PERMIT_LIST:
             return { ...state, loadPermitList: action.payload }
         
+        case LOAD_CALENDAR_PERMIT_LIST:
+            return { ...state, loadCalendarPermitList: action.payload }
+            
         case SET_PERMIT_NO:
             return { ...state, pertmitNo: action.payload }
         
@@ -65,7 +71,10 @@ export default (state=INITIAL_STATE, action) =>{
                          
         case ADD_PERMIT_SET_STATUS:
             return { ...state, addPermit_permitStatus: action.payload }
-                                   
+                   
+        case ADD_PERMIT_CLEAR_STATE:
+            return INITIAL_STATE
+                   
         default:
             return state;
     }

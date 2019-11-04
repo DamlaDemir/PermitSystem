@@ -1,6 +1,3 @@
-import { 
-    LOAD_PERMIT_LIST
-  } from '../actions/types';
 
 export const clickDatetimePicker = ( type,stateName, selectedDtp ) => {
     console.log("clickdatetimepicker");
@@ -43,7 +40,29 @@ export const selectPickerChecked = (type,pickerValue) => {
     }
 }
 
-export const loadPermitList = bool => ({
-    type: LOAD_PERMIT_LIST,
-    payload: bool,
-});
+export const clearState = (type) => {
+    return (dispatch) => {
+     dispatch({
+            type: type
+        });  
+    }
+}
+
+export const pageLoading = (type,value) => {
+    return (dispatch) => {
+        dispatch({
+            type: type,
+            payload: value
+        });
+    }
+}
+
+export const loadPermitList = (type,value) => { //izin eklenince gelen type'a göre liste veya calendar sayfasının yenilenmesi için
+    return (dispatch) => {
+        dispatch({
+            type: type,
+            payload: value
+        });
+    }
+}
+

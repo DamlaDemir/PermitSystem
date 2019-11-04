@@ -16,6 +16,7 @@ import PermitSystemAPI from '../../services/PermitSystemAPI';
 import StorageEnum from '../../common/Enums/StorageEnum';
 import Constant from '../../common/constant';
 import strings from '../../assets/strings/strings';
+import {pageLoading} from '../actions';
 
 export const setName = (name) => {
     return(dispatch) => {
@@ -108,18 +109,13 @@ export const setStartdate = (startdate) => {
     }
 }
 
-export const profileLoading = bool => ({
-    type: PROFILE_LOADING,
-    payload: bool,
-});
-
 export const updateProfile = (userRequest) => {
     return(dispatch) => {
-        dispatch(profileLoading(true));
+        dispatch(pageLoading(PROFILE_LOADING,true));
         LocalStorageService.getItemAsync(StorageEnum.USER).then(user => {
             userRequest.Id = user.value.Id;
             PermitSystemAPI.postValue("api/Values/UpdateProfile", userRequest, response => {
-                dispatch(profileLoading(false));
+                dispatch(pageLoading(PROFILE_LOADING,false));
                 DropDownAlertServices.alert(
                     Constant.msgType.success,
                     strings.LABEL.BASARILI,
@@ -127,7 +123,7 @@ export const updateProfile = (userRequest) => {
                     Constant.MESSAGE_DURATION
                   ); 
         }, err => {
-            dispatch(profileLoading(false));
+            dispatch(pageLoading(PROFILE_LOADING,false));
             DropDownAlertServices.alert(
                 Constant.msgType.error,
                 strings.LABEL.HATA,
@@ -142,7 +138,7 @@ export const updateProfile = (userRequest) => {
 
 export const getProfileInfo = () => {
     return(dispatch) => {
-        dispatch(profileLoading(true));
+        dispatch(pageLoading(PROFILE_LOADING,true));
         LocalStorageService.getItemAsync(StorageEnum.USER).then(user => {
             let ProfileRequest = { Username: user.value.Username };
             PermitSystemAPI.postValue("api/Values/GetProfileInfo", ProfileRequest, response => {
@@ -155,9 +151,9 @@ export const getProfileInfo = () => {
                dispatch(setEmail(response.data.Email));
                dispatch(setAddress(response.data.Address));
                dispatch(setStartdate(response.data.Startdate));        
-               dispatch(profileLoading(false));    
+               dispatch(pageLoading(PROFILE_LOADING,false));  
             }, err => {
-                dispatch(profileLoading(false)); 
+                dispatch(pageLoading(PROFILE_LOADING,false));
                 DropDownAlertServices.alert(
                     Constant.msgType.error,
                     strings.LABEL.HATA,

@@ -87,6 +87,9 @@ class AddTab extends Component {
   }
 
   render() {
+    if(this.props.addPermit_permitType != -1){
+      var pickerProps = { value: this.props.addPermit_permitType}
+    }
     return (
       <Container style={CommonStyles.container}>
         <Content>
@@ -140,7 +143,17 @@ class AddTab extends Component {
                   let permitType = { value: val.value, label: val.value == PermitTypeEnum.YILLIK ? "Yıllık İzin" : "Doğum İzni" }
                   this.props.selectPickerChecked(ADD_PERMIT_TYPE_PICKER_CHECKED,permitType);
                 }}
-                value={this.props.addPermit_permitType} />
+                {...pickerProps} />
+              //   <OPicker
+              //   enabled={true}
+              //   onChange={permitType => this.props.selectPickerChecked(ADD_PERMIT_TYPE_PICKER_CHECKED,permitType)}
+              //   data={options}
+              //   returnType="obj"
+              //   label={["text"]}
+              //   format="%text%"
+              //   value="value"
+              //   defaultLabel={"İzin Türü Seçiniz"}
+              // />
               }
               leftIcon={        
               <Image source={SelectImage} style={CommonStyles.inlineImg} />

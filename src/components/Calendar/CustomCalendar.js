@@ -72,7 +72,6 @@ LocaleConfig.defaultLocale = 'tr';
   }
 
   loadItems(day) {
-    debugger;
     //bu döngünün amacı tarihlerin üstüne basınca altta kutucuk çıkarıp bilgi vermek
     //gelen day yukardan gelen selected date örneğin 2019-05-16
     //aşağıdaki döngü gelen date değerine göre o ayın başından başlıyor (2019-05-01)

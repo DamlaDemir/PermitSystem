@@ -4,7 +4,9 @@ import {
     LOAD_PERMIT_LIST,
     SET_PERMIT_NO,
     SET_REQUEST_DATE,
-    ADD_PERMIT_SET_STATUS
+    ADD_PERMIT_SET_STATUS,
+    ADD_PERMIT_CLEAR_STATE,
+    LOAD_CALENDAR_PERMIT_LIST
  } from './types';
 import PermitSystemAPI from '../../services/PermitSystemAPI';
 import LocalStorageService from '../../services/LocalStorageServices';
@@ -14,7 +16,7 @@ import PermitTypeEnum from '../../common/Enums/PermitTypeEnum';
 import DropDownAlertServices from '../../services/DropdownAlertServices';
 import Constant from '../../common/constant';
 import strings from '../../assets/strings/strings';
-import {loadPermitList} from '../actions';
+import {loadPermitList,clearState,pageLoading} from '../actions';
 // export const clickDatetimePicker = ({ stateName, selectedDtp }) => {
 //     console.log("clickdatetimepicker");
 //     return (dispatch) => {
@@ -94,30 +96,28 @@ export const setExplanation = (explanation) => {
     }
 }
 
-export const AddPermitLoading = bool => ({
-    type: ADDPERMIT_LOADING,
-    payload: bool,
-});
 
 
 
 export const AddOrUpdatePermit = (permitParameters) => {
     return (dispatch) => {
         if(permitValidation(permitParameters)){
-            dispatch(AddPermitLoading(true));
+            dispatch(pageLoading(ADDPERMIT_LOADING,true));
             PermitSystemAPI.postValue("api/Values/AddOrUpdatePermit", permitParameters, response => {
                 if(response.data.status){
-                    dispatch(AddPermitLoading(false));
+                    dispatch(pageLoading(ADDPERMIT_LOADING,false));
                     DropDownAlertServices.alert(
                         Constant.msgType.success,
                         strings.LABEL.BASARILI,
                         strings.MSG.IZIN_TALEBI_BASARILI,
                         Constant.MESSAGE_DURATION
                       );
-                    dispatch(loadPermitList(true)); //liste sayfasının yenilenmesi için
+                    dispatch(clearState(ADD_PERMIT_CLEAR_STATE));  
+                    dispatch(loadPermitList(LOAD_PERMIT_LIST,true)); //liste sayfasının yenilenmesi için
+                    dispatch(loadPermitList(LOAD_CALENDAR_PERMIT_LIST,true)); //Calendar sayfasının yenilenmesi için
                 }
                 else {
-                    dispatch(AddPermitLoading(false));
+                    dispatch(pageLoading(ADDPERMIT_LOADING,false));
                     DropDownAlertServices.alert(
                         Constant.msgType.error,
                         strings.LABEL.HATA,
@@ -126,7 +126,7 @@ export const AddOrUpdatePermit = (permitParameters) => {
                       );
                 }   
             }, err => {
-                dispatch(AddPermitLoading(false));
+                dispatch(pageLoading(ADDPERMIT_LOADING,false));
                 DropDownAlertServices.alert(
                     Constant.msgType.error,
                     strings.LABEL.HATA,

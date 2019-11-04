@@ -10,5 +10,7 @@ export * from './Accordion/AccordionComponent';
 export * from './Pickerselect/PickerSelect';
 export * from './Calendar/CustomCalendar';
 export * from './Loading/Loading';
+export * from './OPicker/OPicker';
+
 
 

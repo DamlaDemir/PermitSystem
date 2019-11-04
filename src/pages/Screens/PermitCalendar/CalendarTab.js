@@ -47,7 +47,7 @@ import {
       }
 
     render() {
-      if(this.props.loadPermitList){
+      if(this.props.loadCalendarPermitList){
         this.GetUserPermitList();
       }
         return (
@@ -88,13 +88,13 @@ const mapStateToProps = ({ calendarTabResponse, addTabResponse }) => {
     markedList
   } = calendarTabResponse;
 
-  const {loadPermitList} = addTabResponse;
+  const {loadCalendarPermitList} = addTabResponse;
 
     return {
       calendarPermitList,
       calendarLoading,
       markedList,
-      loadPermitList
+      loadCalendarPermitList
     };
 };
 

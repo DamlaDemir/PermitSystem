@@ -13,7 +13,7 @@ import PermitTypeEnum from '../../common/Enums/PermitTypeEnum';
 import NavigationService from '../../services/NavigationServices';
 import Constant from '../../common/constant';
 import strings from '../../assets/strings/strings';
-import {loadPermitList} from '../actions';
+import {loadPermitList,pageLoading} from '../actions';
 import moment from 'moment';
 
 export const fillPermitList = (permitList) => ({
@@ -25,13 +25,6 @@ export const fillPersonelList = (personelList) => ({
     type: FILL_PERSONEL_LIST,
     payload: personelList,
 });
-
-export const filterLoading = bool => ({
-    type: FILTER_LOADING,
-    payload: bool,
-});
-
-
 
 export const getPersonelList = () => {
     return (dispatch) => {
@@ -66,8 +59,8 @@ export const getPersonelList = () => {
 export const getPermitList = (permitRequest) => {
     return (dispatch) => {
         if(filterValidation(permitRequest)){
-            dispatch(loadPermitList(false));
-            dispatch(filterLoading(true));
+            dispatch(loadPermitList(LOAD_PERMIT_LIST,false));
+            dispatch(pageLoading(FILTER_LOADING,true));
             LocalStorageService.getItemAsync(StorageEnum.USER).then(user => {
                 if (!user.value.IsAdmin) {
                     permitRequest.UserId = user.value.Id;
@@ -76,10 +69,10 @@ export const getPermitList = (permitRequest) => {
                 PermitSystemAPI.postValue("api/Values/GetPermits",permitRequest, response => {
                     var list = setDataArray(response,user);
                     dispatch(fillPermitList(list)); 
-                    dispatch(filterLoading(false));
+                    dispatch(pageLoading(FILTER_LOADING,false));
                     // NavigationService.navigate('ListTab');
                 }, err => {
-                    dispatch(filterLoading(false));
+                    dispatch(pageLoading(FILTER_LOADING,false));
                     DropDownAlertServices.alert(
                         Constant.msgType.error,
                         strings.LABEL.HATA,
